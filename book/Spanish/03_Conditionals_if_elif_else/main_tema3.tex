@@ -1,0 +1,40 @@
+\documentclass[fontsize=10pt,a4paper]{scrartcl}
+
+\usepackage{book/styles/myusepackages}
+\usepackage{book/styles/mypythonstyle}
+\usepackage{book/styles/myMCquestions}
+\usepackage{book/styles/myframedenv}
+%If graphics is listed before,some problems arise
+\usepackage{graphicx}
+
+\usepackage[spanish]{babel}
+\usepackage[spanish,verbose]{layout}
+\hypersetup{pdflang={es-ES}}
+
+\include{book/configuration}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TITLE
+\title{Programación en Python\\ TEMA 3}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\Huge #1 \par}}{}{}
+}
+\makeatother
+\subtitle{\Large{if-elif-else.}}
+\author{Universidad Politécnica de Valencia}
+\date{\academicyear{}}
+%%%%%%%%%%%%%%%%%%%END TITLE%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\include{book/disclaimer-ES}
+\include{book/Spanish/03_Conditionals_if_elif_else/tema3}
+\include{book/Spanish/03_Conditionals_if_elif_else/tema3_ejercicios}
+
+%\printbibliography
+\end{document}
+
+

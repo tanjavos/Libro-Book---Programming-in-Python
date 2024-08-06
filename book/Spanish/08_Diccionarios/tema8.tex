@@ -1,0 +1,648 @@
+\hypertarget{diccionarios}{%
+\section{Diccionarios}\label{diccionarios}}
+
+\index{diccionario} \index{diccionario}
+
+\index{tipo!dict} \index{clave} \index{clave-valor par} \index{índice}
+\index{}
+
+Un \emph{diccionario} es como una lista, pero más general. En una lista,
+los índices de posiciones tienen que ser enteros; en un diccionario, los
+índices pueden ser (casi) cualquier tipo.
+
+Puedes pensar en un diccionario como una asociación entre un conjunto de
+índices (que son llamados \emph{claves}) y un conjunto de valores. Cada
+clave apunta a un valor. La asociación de una clave y un valor es
+llamada \emph{par clave-valor} o a veces \emph{elemento}.
+
+Como ejemplo, vamos a construir un diccionario que asocia palabras de
+Inglés a Español, así que todas las claves y los valores son cadenas.
+
+La función \texttt{dict} crea un nuevo diccionario sin elementos. Debido
+a que \texttt{dict} es el nombre de una función interna, deberías evitar
+usarlo como un nombre de variable.
+
+\index{función dict} \index{dict!función}
+
+
+\begin{Verbatim}[frame=single]
+>>> eng2sp = dict()
+>>> print(eng2sp)
+  {}
+\end{Verbatim}
+
+
+Las llaves, \texttt{\{\}}, representan un diccionario vacío. Para
+agregar elementos a un diccionario, puedes utilizar corchetes:
+
+\index{corchetes} \index{corchetes}
+
+
+\begin{Verbatim}[frame=single]
+>>> eng2sp['one'] = 'uno'
+\end{Verbatim}
+
+
+Esta línea crea un elemento asociando a la clave
+\texttt{\textquotesingle{}one\textquotesingle{}} el valor ``uno''. Si
+imprimimos el diccionario de nuevo, vamos a ver un par clave-valor con
+dos puntos entre la clave y el valor:
+
+
+\begin{Verbatim}[frame=single]
+>>> print(eng2sp)
+  {'one': 'uno'}
+\end{Verbatim}
+
+
+Este formato de salida es también un formato de entrada. Por ejemplo,
+puedes crear un nuevo diccionario con tres elementos. Pero si imprimes
+\texttt{eng2sp}, te vas a sorprender:
+
+
+\begin{Verbatim}[frame=single]
+>>> eng2sp = {'one': 'uno', 'two': 'dos', 'three': 'tres'}
+>>> print(eng2sp)
+  {'one': 'uno', 'three': 'tres', 'two': 'dos'}
+\end{Verbatim}
+
+
+El orden de los pares clave-elemento no es el mismo. De hecho, si tu
+escribes este mismo ejemplo en tu computadora, podrías obtener un
+resultado diferente. En general, el orden de los elementos en un
+diccionario es impredecible.
+
+Pero ese no es un problema porque los elementos de un diccionario nunca
+son indexados con índices enteros. En vez de eso, utilizas las claves
+para encontrar los valores correspondientes:
+
+
+\begin{Verbatim}[frame=single]
+>>> print(eng2sp['two'])
+  'dos'
+\end{Verbatim}
+
+
+La clave \texttt{\textquotesingle{}two\textquotesingle{}} siempre se
+asocia al valor ``dos'', así que el orden de los elementos no importa.
+
+Si la clave no está en el diccionario, obtendrás una excepción
+(\texttt{KeyError}):
+
+\begin{Verbatim}[frame=single]
+>>> print(eng2sp['four'])
+  KeyError: 'four'
+\end{Verbatim}
+
+
+La función \texttt{len} funciona en diccionarios y devuelve el número
+de pares clave-valor:
+
+\index{función len} \index{len!función}
+
+
+\begin{Verbatim}[frame=single]
+>>> len(eng2sp)
+  3
+\end{Verbatim}
+
+
+El operador \texttt{in} funciona en diccionarios; éste te dice si algo
+aparece como una \emph{clave} en el diccionario (aparecer como valor no
+es suficiente).
+
+\index{miembro!diccionario} \index{operador in} \index{in!operador}
+
+
+\begin{Verbatim}[frame=single]
+>>> 'one' in eng2sp
+  True
+>>> 'uno' in eng2sp
+  False
+\end{Verbatim}
+
+
+Para ver si algo aparece como valor en un diccionario, puedes usar el
+método \texttt{values}, el cual retorna los valores como una lista, y
+después puedes usar el operador \texttt{in}:
+
+\index{método valores} \index{valores!método}
+
+
+\begin{Verbatim}[frame=single]
+>>> vals = list(eng2sp.values())
+>>> 'uno' in vals
+  True
+\end{Verbatim}
+
+
+El operador \texttt{in} utiliza diferentes algoritmos para listas y
+diccionarios. Para listas, utiliza un algoritmo de búsqueda lineal.
+Conforme la lista se vuelve más grande, el tiempo de búsqueda se vuelve
+más largo en proporción al tamaño de la lista. Para diccionarios, Python
+utiliza un algoritmo llamado \emph{tabla hash} (hash table, en inglés)
+que tiene una propiedad importante: el operador \texttt{in} toma la
+misma cantidad de tiempo sin importar cuántos elementos haya en el
+diccionario. No vamos a explicar porqué las funciones hash son tan
+mágicas, pero puedes leer más al respecto en
+\href{https://es.wikipedia.org/wiki/Tabla_hash}{es.wikipedia.org/wiki/Tabla\_hash}.
+
+\index{tabla hash} \index{establecer miembro} \index{miembro!establecer}
+
+
+\begin{exercise}
+En Poliformat encuentras una copia del archivo \texttt{words.txt}
+Escribe un programa que lee las palabras de \emph{words.txt} y
+las almacena como claves en un diccionario. No importa qué valores
+tenga. Luego puedes utilizar el operador \texttt{in} como una forma
+rápida de revisar si una palabras está en el diccionario.
+\end{exercise}
+
+
+\hypertarget{diccionario-como-un-conjunto-de-contadores}{%
+\section{Diccionario como un conjunto de
+contadores}\label{diccionario-como-un-conjunto-de-contadores}}
+
+\index{contador}
+
+Supongamos que recibes una cadena y quieres contar cuántas veces aparece
+cada letra. Hay varias formas en que puedes hacerlo:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Puedes crear 26 variables, una por cada letra del alfabeto. Luego
+  puedes recorrer la cadena, y para cada caracter, incrementar el
+  contador correspondiente, probablemente utilizando varios
+  condicionales.
+\item
+  Puedes crear una lista con 26 elementos. Después podrías convertir
+  cada caracter en un número (usando la función interna \texttt{ord}),
+  usar el número como índice dentro de la lista, e incrementar el
+  contador correspondiente.
+\item
+  Puedes crear un diccionario con caracteres como claves y contadores
+  como los valores correspondientes. La primera vez que encuentres un
+  caracter, agregarías un elemento al diccionario. Después de eso
+  incrementarías el valor del elemento existente.
+\end{enumerate}
+
+Cada una de esas opciones hace la misma operación computacional, pero
+cada una de ellas implementa esa operación en forma diferente.
+
+\index{implementación}
+
+Una \emph{implementación} es una forma de llevar a cabo una operación
+computacional; algunas implementaciones son mejores que otras. Por
+ejemplo, una ventaja de la implementación del diccionario es que no
+tenemos que saber con antelación qué letras aparecen en la cadena y
+solamente necesitamos espacio para las letras que sí aparecen.
+
+Aquí está un ejemplo de como se vería ese código:
+
+
+\begin{python}[frame=single]
+palabra = 'brontosaurio'
+d = dict()
+for c in palabra:
+    if c not in d:
+        d[c] = 1
+    else:
+        d[c] = d[c] + 1
+print(d)
+\end{python}
+
+
+Realmente estamos calculando un \emph{histograma}, el cual es un término
+estadístico para un conjunto de contadores (o frecuencias).
+
+\index{histograma} \index{frecuencia} \index{recorrido}
+
+El bucle \texttt{for} recorre la cadena. Cada vez que entramos al bucle,
+si el caracter \texttt{c} no está en el diccionario, creamos un nuevo
+elemento con la clave \texttt{c} y el valor inicial 1 (debido a que
+hemos visto esta letra solo una vez). Si \texttt{c} ya está previamente
+en el diccionario incrementamos \texttt{d{[}c{]}}.
+
+\index{histograma}
+
+Aquí está la salida del programa:
+
+\begin{verbatim}
+{'b': 1, 'r': 2, 'o': 3, 'n': 1, 't': 1, 's': 1, 'a': 1, 'u': 1, 'i': 1}
+\end{verbatim}
+
+El histograma indica que las letras ``a'' y ``b'' aparecen solo una vez;
+``o'' aparece dos, y así sucesivamente.
+
+\index{método get} \index{get!método}
+
+Los diccionarios tienen un método llamado \texttt{get} que toma una
+clave y un valor por defecto. Si la clave aparece en el diccionario,
+\texttt{get} regresa el valor correspondiente; si no, regresa el valor
+por defecto. Por ejemplo:
+
+
+\begin{Verbatim}[frame=single]
+>>> cuentas = { 'chuck' : 1 , 'annie' : 42, 'jan': 100}
+>>> print(cuentas.get('jan', 0))
+  100
+>>> print(cuentas.get('tim', 0))
+  0
+\end{Verbatim}
+
+
+Podemos usar \texttt{get} para escribir nuestro bucle de histograma más
+conciso. Puesto que el método \texttt{get} automáticamente maneja el
+caso en que una clave no está en el diccionario, podemos reducir cuatro
+líneas a una y eliminar la sentencia \texttt{if}.
+
+
+\begin{python}[frame=single]
+palabra = 'brontosaurio'
+d = dict()
+for c in palabra:
+    d[c] = d.get(c,0) + 1
+print(d)
+\end{python}
+
+
+%El uso del método \texttt{get} para simplificar este bucle contador termina siendo un ``idioma'' muy utilizado en Python y vamos a utilizarlo muchas veces en el resto del libro. Así que deberías tomar un momento para comparar el bucle utilizando la sentencia \texttt{if} y el operador \texttt{in} con el bucle utilizando el método \texttt{get}. Ambos hacen exactamente lo mismo, pero uno es más breve.
+
+\hypertarget{diccionarios-y-archivos}{%
+\section{Diccionarios y archivos}\label{diccionarios-y-archivos}}
+
+Uno de los usos más comunes de un diccionario es contar las ocurrencias
+de palabras en un archivo con algún texto escrito. Vamos comenzando con
+un archivo de palabras muy simple tomado del texto de \emph{Romeo y
+Julieta}.
+
+Para el primer conjunto de ejemplos, vamos a usar una versión más corta
+y más simplificada del texto sin signos de puntuación. Después
+trabajaremos con el texto de la escena con signos de puntuación
+incluidos.
+
+\begin{verbatim}
+But soft what light through yonder window breaks
+It is the east and Juliet is the sun
+Arise fair sun and kill the envious moon
+Who is already sick and pale with grief
+\end{verbatim}
+
+Vamos a escribir un programa de Python para leer a través de las líneas
+del archivo, dividiendo cada línea en una lista de palabras, y después
+iterando a través de cada una de las palabras en la línea y contando
+cada palabra utilizando un diccionario.
+
+\index{bucles anidados} \index{bucles!anidados}
+
+Verás que tenemos dos bucles \texttt{for}. El bucle externo está leyendo
+las líneas del archivo y el bucle interno está iterando a través de cada
+una de las palabras en esa línea en particular. Este es un ejemplo de un
+patrón llamado \emph{bucles anidados} porque uno de los bucles es el
+bucle \emph{externo} y el otro bucle es el bucle \emph{interno}.
+
+Como el bucle interno ejecuta todas sus iteraciones cada vez que el
+bucle externo hace una sola iteración, consideramos que el bucle interno
+itera ``más rápido'' y el bucle externo itera más lento.
+
+\index{Romeo y Julieta}
+
+La combinación de los dos bucles anidados asegura que contemos cada
+palabra en cada línea del archivo de entrada.
+
+%\VerbatimInput{../code3/count1.py}
+\begin{python}[frame=single]
+fname = input('Ingresa el nombre de archivo: ')
+try:
+    fhand = open(fname)
+except:
+    print('El archivo no se puede abrir:', fname)
+    exit()
+
+counts = dict()
+for line in fhand:
+    words = line.split()
+    for word in words:
+        if word not in counts:
+            counts[word] = 1
+        else:
+            counts[word] += 1
+
+print(counts)
+\end{python}
+
+En nuestra sentencia \texttt{else}, utilizamos la alternativa más
+compacta para incrementar una variable. \texttt{counts{[}word{]}\ +=\ 1}
+es equivalente a \texttt{counts{[}word{]}\ =\ counts{[}word{]}\ +\ 1}.
+Cualquiera de los dos métodos puede usarse para cambiar el valor de una
+variable en cualquier cantidad. Existen alternativas similares para
+\texttt{-=}, \texttt{*=}, y \texttt{/=}.
+
+Cuando ejecutamos el programa, vemos una salida sin procesar que
+contiene todos los contadores sin ordenar. El archivo \emph{romeo.txt}
+está disponible en PoliformaT.
+
+\begin{Verbatim}[frame=single]
+>>> %Run
+  Ingresa el nombre de archivo: romeo.txt
+  {'and': 3, 'envious': 1, 'already': 1, 'fair': 1,
+  'is': 3, 'through': 1, 'pale': 1, 'yonder': 1,
+  'what': 1, 'sun': 2, 'Who': 1, 'But': 1, 'moon': 1,
+  'window': 1, 'sick': 1, 'east': 1, 'breaks': 1,
+  'grief': 1, 'with': 1, 'light': 1, 'It': 1, 'Arise': 1,
+  'kill': 1, 'the': 3, 'soft': 1, 'Juliet': 1}
+\end{Verbatim}
+
+Es un poco inconveniente ver a través del diccionario para encontrar las
+palabras más comunes y sus contadores, así que necesitamos agregar un
+poco más de código para mostrar una salida que nos sirva más.
+
+\hypertarget{bucles-y-diccionarios}{%
+\section{Bucles y diccionarios}\label{bucles-y-diccionarios}}
+
+\index{bucles y!diccionarios} \index{bucles!y diccionarios}
+\index{recorrido}
+
+Si utilizas un diccionario como una secuencia para un bucle
+\texttt{for}, esta recorre las claves del diccionario. Este bucle
+imprime cada clave y su valor correspondiente:
+
+
+\begin{python}[frame=single]
+contadores = { 'chuck' : 1 , 'annie' : 42, 'jan': 100}
+for clave in contadores:
+    print(clave, contadores[clave])
+\end{python}
+
+
+Aquí está lo que muestra de salida:
+
+\begin{Verbatim}[frame=single]
+jan 100
+chuck 1
+annie 42
+\end{Verbatim}
+
+De nuevo, las claves no están en ningún orden en particular.
+
+\index{idioma}
+
+Podemos utilizar un bucle \texttt{for} de esta manera con diccionarios para implementar diferentes cosas. Por ejemplo, si queremos encontrar todas
+las entradas en un diccionario con valor mayor a diez, podemos escribir
+el siguiente código:
+
+
+\begin{python}[frame=single]
+contadores = { 'chuck' : 1 , 'annie' : 42, 'jan': 100}
+for clave in contadores:
+    if contadores[clave] > 10 :
+        print(clave, contadores[clave])
+\end{python}
+
+
+El bucle \texttt{for} itera a través de las \emph{claves} del
+diccionario, así que debemos utilizar el operador índice para obtener el
+\emph{valor} correspondiente a cada clave. Aquí está la salida del
+programa:
+
+\begin{Verbatim}[frame=single]
+jan 100
+annie 42
+\end{Verbatim}
+
+Vemos solamente las entradas que tienen un valor mayor a 10.
+
+\index{método de claves} \index{claves!método de}
+
+Si quieres imprimir las claves en orden alfabético, primero haces una
+lista de las claves en el diccionario utilizando el método \texttt{keys}
+disponible en los objetos de diccionario, y después ordenar esa lista e
+iterar a través de la lista ordenada, buscando cada clave e imprimiendo
+pares clave-valor ordenados, tal como se muestra a continuación:
+
+
+\begin{python}[frame=single]
+contadores = { 'chuck' : 1 , 'annie' : 42, 'jan': 100}
+lst = list(contadores.keys())
+print(lst)
+lst.sort()
+for clave in lst:
+    print(clave, contadores[clave])
+\end{python}
+
+
+Así se muestra la salida:
+
+\begin{verbatim}
+['jan', 'chuck', 'annie']
+annie 42
+chuck 1
+jan 100
+\end{verbatim}
+
+Primero se ve la lista de claves sin ordenar como la obtuvimos del
+método \texttt{keys}. Después vemos los pares clave-valor en orden desde
+el bucle \texttt{for}.
+
+\hypertarget{anuxe1lisis-avanzado-de-texto}{%
+\section{Análisis avanzado de
+texto}\label{anuxe1lisis-avanzado-de-texto}}
+
+\index{Romeo y Julieta}
+
+En el ejemplo anterior utilizando el archivo \emph{romeo.txt}, hicimos
+el archivo tan simple como fue posible removiendo los signos de
+puntuación a mano. El text real tiene muchos signos de puntuación, como:
+
+\begin{verbatim}
+But, soft! what light through yonder window breaks?
+It is the east, and Juliet is the sun.
+Arise, fair sun, and kill the envious moon,
+Who is already sick and pale with grief,
+\end{verbatim}
+
+Puesto que la función \texttt{split} en Python busca espacios y trata
+las palabras como piezas separadas por esos espacios, trataríamos a las
+palabras ``soft!'' y ``soft'' como \emph{diferentes} palabras y
+crearíamos una entrada independiente para cada palabra en el
+diccionario.
+Además, como el archivo tiene letras mayúsculas, trataríamos ``who'' y
+``Who'' como diferentes palabras con diferentes contadores.
+
+Podemos resolver ambos problemas utilizando los siguientes métodos de cadenas:
+
+1. \texttt{lower}: reemplaza todos los mayúsculas con su minusculas correspondientes:
+
+\begin{Verbatim}[frame=single]
+>>> "HeLlOo!".lower()
+'helloo!'
+\end{Verbatim}
+
+2. \texttt{punctuation}: devuelve los
+caracteres que Python considera como ``signos de puntuación'':
+
+
+\begin{Verbatim}[frame=single]
+>>> import string
+>>> string.punctuation
+'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+\end{Verbatim}
+
+3. \texttt{translate}, el más sutil de los métodos. Aquí esta la
+documentación para \texttt{translate}:
+
+\texttt{line.translate(str.maketrans(fromstr,\ tostr,\ deletestr))}
+
+\emph{Reemplaza los caracteres en \texttt{fromstr} con el caracter en la
+misma posición en \texttt{tostr} y elimina todos los caracteres que
+están en \texttt{deletestr}. Los parámetros \texttt{fromstr} y
+\texttt{tostr} pueden ser cadenas vacías y el parámetro
+\texttt{deletestr} es opcional.}
+
+No vamos a especificar el valor de \texttt{tostr} pero vamos a utilizar
+el parámetro \texttt{deletestr} para eliminar todos los signos de
+puntuación. 
+
+Hacemos las siguientes modificaciones a nuestro programa:
+
+%\VerbatimInput{../code3/count2.py}
+\begin{python}[frame=single]
+import string
+
+fname = input('Ingresa el nombre de archivo: ')
+try:
+    fhand = open(fname)
+except:
+    print('El archivo no se puede abrir:', fname)
+    exit()
+
+counts = dict()
+for line in fhand:
+    line = line.rstrip()
+    line = line.translate(line.maketrans('', '', string.punctuation))
+    line = line.lower()
+    words = line.split()
+    for word in words:
+        if word not in counts:
+            counts[word] = 1
+        else:
+            counts[word] += 1
+
+print(counts)
+\end{python}
+
+Parte de aprender el ``Arte de Python'' o ``Pensamiento Pythónico'' es
+entender que Python muchas veces tiene funciones internas para muchos
+problemas de análisis de datos comunes. A través del tiempo, verás
+suficientes códigos de ejemplo y leerás lo suficiente en la
+documentación para saber dónde buscar si alguien escribió algo que haga
+tu trabajo más fácil.
+
+Lo siguiente es una versión reducida de la salida:
+
+\begin{verbatim}
+Ingresa el nombre de archivo: romeo-full.txt
+{'swearst': 1, 'all': 6, 'afeard': 1, 'leave': 2, 'these': 2,
+'kinsmen': 2, 'what': 11, 'thinkst': 1, 'love': 24, 'cloak': 1,
+a': 24, 'orchard': 2, 'light': 5, 'lovers': 2, 'romeo': 40,
+'maiden': 1, 'whiteupturned': 1, 'juliet': 32, 'gentleman': 1,
+'it': 22, 'leans': 1, 'canst': 1, 'having': 1, ...}
+\end{verbatim}
+
+Interpretar los datos a través de esta salida es aún difícil, y podemos
+utilizar Python para darnos exactamente lo que estamos buscando, pero
+para que sea así, necesitamos aprender acerca de las \emph{tuplas} en
+Python. Vamos a retomar este ejemplo una vez que aprendamos sobre
+tuplas.
+
+\hypertarget{depuraciuxf3n}{%
+\section{Depuración}\label{depuraciuxf3n}}
+
+\index{depuración}
+
+Conforme trabajes con conjuntos de datos más grandes puede ser
+complicado depurar imprimiendo y revisando los datos a mano. Aquí hay
+algunas sugerencias para depurar grandes conjuntos de datos:
+
+\begin{description}
+\item[Reducir la entrada]
+Si es posible, trata de reducir el tamaño del conjunto de datos. Por
+ejemplo, si el programa lee un archivo de texto, comienza solamente con
+las primeras 10 líneas, o con el ejemplo más pequeño que puedas
+encontrar. Puedes ya sea editar los archivos directamente, o (mejor)
+modificar el programa para que solamente lea las primeras \texttt{n}
+número de líneas.
+
+Si hay un error, puedes reducir \texttt{n} al valor más pequeño que
+produce el error, y después incrementarlo gradualmente conforme vayas
+encontrando y corrigiendo errores.
+\item[Revisar extractos y tipos]
+En lugar de imprimir y revisar el conjunto de datos completo, considera
+imprimir extractos de los datos: por ejemplo, el número de elementos en
+un diccionario o el total de una lista de números.
+
+Una causa común de errores en tiempo de ejecución es un valor que no es
+el tipo correcto. Para depurar este tipo de error, generalmente es
+suficiente con imprimir el tipo de un valor.
+\item[Escribe auto-verificaciones]
+Algunas veces puedes escribir código para revisar errores
+automáticamente. Por ejemplo, si estás calculando el promedio de una
+lista de números, podrías verificar que el resultado no sea más grande
+que el elemento más grande de la lista o que sea menor que el elemento
+más pequeño de la lista. Esto es llamado ``prueba de sanidad'' porque
+detecta resultados que son ``completamente ilógicos''.
+\index{prueba sanidad} \index{prueba consistencia}
+
+Otro tipo de prueba compara los resultados de dos diferentes cálculos
+para ver si son consistentes. Esto es conocido como ``prueba de
+consistencia''.
+\item[Imprimir una salida ordenada]
+Dar un formato a los mensajes de depuración puede facilitar encontrar un
+error.
+\end{description}
+
+De nuevo, el tiempo que inviertas haciendo una buena estructura puede
+reducir el tiempo que inviertas en depurar. \index{estructurar}
+
+\hypertarget{glosario}{%
+\section{Glosario}\label{glosario}}
+
+\begin{description}
+\tightlist
+\item[bucles anidados]
+Cuando hay uno o más bucles ``dentro'' de otro bucle. Los bucles
+internos terminan de ejecutar cada vez que el bucle externo ejecuta una
+vez. \index{bucles anidados} \index{anidados!bucles}
+\item[búsqueda]
+Una operación de diccionario que toma una clave y encuentra su valor
+correspondiente. \index{búsqueda}
+\item[clave]
+Un objeto que aparece en un diccionario como la primera parte de un par
+clave-valor. \index{clave}
+\item[diccionario]
+Una asociación de un conjunto de claves a sus valores correspondientes.
+\index{diccionario}
+\item[elemento]
+Otro nombre para un par clave-valor. \index{elemento!diccionario}
+\item[función hash]
+Una función utilizada por una tabla hash para calcular la localización
+de una clave. \index{función hash}
+\item[histograma]
+Un set de contadores. \index{histograma}
+\item[implementación]
+Una forma de llevar a cabo un cálculo. \index{implementación}
+\item[par clave-valor]
+La representación de una asociación de una clave a un valor.
+\index{par clave-valor}
+\item[tabla hash]
+El algoritmo utilizado para implementar diccionarios en Python.
+\index{tabla hash}
+\item[valor]
+Un objeto que aparece en un diccionario como la segunda parte de un par
+clave-valor. Esta definición es más específica que nuestro uso previo de
+la palabra ``valor''. \index{valor}
+\end{description}
+
+
+

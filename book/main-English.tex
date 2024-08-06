@@ -1,0 +1,45 @@
+\documentclass[fontsize=10pt,a4paper]{book}
+
+\usepackage{../book/styles/myusepackages}
+\usepackage{../book/styles/mypythonstyle}
+\usepackage{../book/styles/myMCquestions}
+\usepackage{../book/styles/myframedenv}
+%If graphics is listed before,some problems arise
+\usepackage{graphicx}
+
+\usepackage[english]{babel}
+\hypersetup{pdflang={en-EN}}
+
+\include{book/configuration}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TITLE
+
+\title{Programming in Python}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\Huge #1 \par}}{}{}
+}
+\makeatother
+\subtitle{}
+\author{Universidad Politécnica de Valencia}
+\date{\academicyear{}}
+%%%%%%%%%%%%%%%%%%%END TITLE%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+
+\include{disclaimer-EN}
+
+\tableofcontents
+
+\newpage
+
+\chapter{Introduction}
+\subimport{English/01_Introduction}{theme1}
+
+\chapter{}
+\subimport{}{}
+
+\end{document}

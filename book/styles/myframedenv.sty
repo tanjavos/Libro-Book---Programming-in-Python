@@ -1,0 +1,24 @@
+%Make framed environments
+\usepackage{mdframed}
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+
+\newenvironment{definition}%
+  {\begin{mdframed}[skipabove=10pt,skipbelow=10pt,backgroundcolor=blue!10]}%
+  {\end{mdframed}}
+
+\newenvironment{highlights}%
+  {\begin{mdframed}[skipabove=10pt,skipbelow=10pt,backgroundcolor=lightgray]}%
+  {\end{mdframed}}
+
+\newenvironment{todo}%
+  {\begin{mdframed}[skipabove=10pt,skipbelow=10pt,backgroundcolor=yellow!20A]}%
+  {\end{mdframed}}
+  
+\newenvironment{remark}%
+  {\begin{mdframed}[skipabove=10pt,skipbelow=10pt,backgroundcolor=blue!20]}%
+  {\end{mdframed}}  
+
+\newenvironment{feedback}%
+  {\begin{mdframed}[skipabove=10pt,skipbelow=10pt,backgroundcolor=orange!20]}%
+  {\end{mdframed}}

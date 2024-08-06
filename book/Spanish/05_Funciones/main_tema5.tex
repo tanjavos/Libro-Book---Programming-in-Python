@@ -1,0 +1,42 @@
+\documentclass[fontsize=10pt,a4paper]{scrartcl}
+
+\usepackage{../../styles/myusepackages}
+\usepackage{../../styles/mypythonstyle}
+\usepackage{../../styles/myMCquestions}
+\usepackage{../../styles/myframedenv}
+%If graphics is listed before,some problems arise
+\usepackage{graphicx}
+
+\usepackage[english]{babel}
+\usepackage[english,verbose]{layout}
+\hypersetup{pdflang={es-ES}}
+
+\include{configuration}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TITLE
+\title{Programing in Python\\ TEMA 5}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\Huge #1 \par}}{}{}
+}
+\makeatother
+\subtitle{\Large{Funciones y testing}}
+\author{Universidad Politécnica de Valencia}
+\date{\academicyear{}}
+%%%%%%%%%%%%%%%%%%%END TITLE%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\include{disclaimer-ES}
+\include{tema5}
+\include{tema5_ejercicios}
+\include{book/Spanish/05_Funciones/tema5_ejercicios_tipo_test}
+
+
+%\printbibliography
+\end{document}
+
+

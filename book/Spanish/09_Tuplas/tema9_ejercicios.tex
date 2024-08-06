@@ -1,0 +1,160 @@
+\section{Ejercicios Tuplas}\label{ejercicios}
+
+\begin{exercise}
+Escriba una función \pythoninline{string_list_to_tuple} Python que convierta una cadena en una tupla.
+
+\begin{Verbatim}[frame=single, label = {\em example test runs}]
+>>> string_list_to_tuple("")
+  ()
+>>> string_list_to_tuple("hola")
+  ('h', 'o', 'l', 'a')
+>>> string_list_to_tuple("hola caracola")
+  ('h', 'o', 'l', 'a', ' ', 'c', 'a', 'r', 'a', 'c', 'o', 'l', 'a')
+\end{Verbatim}
+
+\end{exercise}
+
+\begin{exercise}
+Escriba una función \pythoninline{suma_tuplas} en Python para calcular la suma de los elementos de 3 tuplas dadas. Puedes testear tu función como sigue:
+
+\begin{python}
+import pytest
+
+x1 = (1,2,3,4)
+y1 = (3,5)
+z1 = (2,2,3,1,9,10,4)
+salida_esperada1 = (6, 9, 6, 5, 9, 10, 4)
+
+x2 = (-2,5,9)
+y2 = (1,)
+z2 = (2,3,3,1,9,3)
+salida_esperada2 = (1, 8, 12, 1, 9, 3)
+
+@pytest.mark.parametrize("testcase, x, y, z, salida_esperada",[
+(1, x1, y1, z1, salida_esperada1),
+(2, x2, y2, z2, salida_esperada2),
+]) 
+
+def test_suma_tuplas(testcase, x, y, z, salida_esperada):
+    assert suma_tuplas(x,y,z) == salida_esperada,\
+           "caso {0}".format(testcase)
+\end{python}
+\end{exercise}
+
+
+
+\begin{exercise}
+Escriba una función \pythoninline{todos_equal_tupla} en Python que devuelve \pythoninline{True} cuando todos los elementos de la tupla son iguales y \pythoninline{False} s no lo son.
+
+\begin{Verbatim}[frame=single, label = {\em example test runs}]
+>>> todos_equal_tupla((3,4,5,6))
+False
+>>> todos_equal_tupla((3,3,3,3,3,3))
+True
+\end{Verbatim}
+
+\end{exercise}
+
+
+\begin{exercise}
+Escribe una función \pythoninline{suma_resta} que tome una lista o tupla de números. Devuelve el resultado de alternativamente
+sumar y restar números entre sí.
+
+Por ejemplo: \pythoninline{suma_resta([10, 20, 30, 40, 50, 60])} devuelve el resultado de 10+20-30+40-50+60, es 50.
+
+\begin{Verbatim}[frame=single, label = {\em example test runs}]
+>>> suma_resta((3,4,5,6))
+  8
+>>> suma_resta((13,13,13,13,13,13))
+  6
+\end{Verbatim}
+
+
+
+\end{exercise}
+
+
+\begin{exercise}
+Escribe un programa que lee un archivo y calcula las frecuencias en que aparecen las \emph{letras}. El programa debe
+convertir todas las entradas a minúsculas y contar solamente las letras
+a-z. El programa no debe contar espacios, dígitos, signos de puntuación,
+o cualquier cosa que no sean las letras a-z. 
+
+Encuentra ejemplos de texto
+en idiomas diferentes (español, ingles, alemán, holandés, francés) y observa cómo la frecuencia de letras es diferente en cada idioma. 
+
+Compara tus resultados con las tablas en
+\url{https://en.wikipedia.org/wiki/Letter_frequency}.
+\end{exercise}
+
+
+\begin{exercise}
+Escribe una función \pythoninline{mapear_anagrams} que lea una lista de palabras desde un archivo \texttt{words.txt} que esta en Poliformat y los guarda en un diccionario de conjuntos de palabras que son anagramas. Hay que construir un diccionario que mapee de una
+colección de letras a una lista de palabras que se puedan escribir con esas
+letras.  La pregunta es, ¿cómo puedes representar la colección de
+letras de manera que se pueda utilizar como clave?
+
+Despues, escribe otra funcion \pythoninline{imprimir_anagrams} que recibe el diccionario que resulta de \pythoninline{mapear_anagrams} y imprime las listas de palabras que son anagramas. Aquí hay un ejemplo de cómo se vería la salida cuando hacemos tests en el shell:
+
+\begin{Verbatim}
+>>> dicc_map = mapear_anagrams("words.txt")
+>>> imprimir_anagrams(dicc_map)
+['aa']
+['aah', 'aha'
+['aahed', 'ahead']
+['aal', 'ala']
+['alas', 'aals']
+....
+\end{Verbatim}
+\end{exercise}
+
+\begin{exercise}
+Modifica el programa anterior para que imprima la lista de anagramas
+más largo primero, seguido de la segunda más grande, y así sucesivamente. Recuerda el patrón de diseño DSU. Y ¿si queremos imprimir primero al alista de la palabra más larga?
+
+\begin{footnotesize}
+\begin{Verbatim}
+>>> dicc_map = mapear_anagrams("words.txt")
+>>> imprimir_anagrams_descending(dicc_map)
+['alerts', 'laster', 'salter', 'stelar', 'talers', 'estral', 'alters', 'ratels', 'staler', 'slater', 'artels']
+['pears', 'presa', 'prase', 'apers', 'spare', 'reaps', 'rapes', 'spear', 'pares', 'asper', 'parse']
+['tesla', 'slate', 'setal', 'steal', 'teals', 'tales', 'taels', 'stela', 'stale', 'least']
+['escarp', 'recaps', 'secpar', 'capers', 'crapes', 'spacer', 'pacers', 'parsec', 'scrape']
+['insert', 'inters', 'trines', 'estrin', 'niters', 'inerts', 'nitres', 'triens', 'sinter']
+['scare', 'acres', 'carse', 'serac', 'acers', 'escar', 'races', 'cares']
+['retsina', 'anestri', 'stainer', 'nastier', 'stearin', 'retains', 'retinas', 'ratines']
+\end{Verbatim}
+\end{footnotesize}
+
+\end{exercise}
+
+\begin{exercise}
+Una librería para colores web es \url{https://pypi.org/project/webcolors/1.3/}. Se puede añadir fácilmente en Thonny en 
+herramientas $\rightarrow$ manage packages $\rightarrow$ buscar webcolors.
+El el modulo \pythoninline{webcolors} hay un diccionario cuyas claves son los nombres normalizados de los dieciséis colores HTML 4 con nombre, y cuyos valores son los valores hexadecimales normalizados de esos colores.
+
+\begin{python}    
+>>> import webcolors
+>>> webcolors.HTML4_NAMES_TO_HEX
+{'aqua': '#00ffff', 
+ 'black': '#000000', 
+ 'blue': '#0000ff', 
+ 'fuchsia': '#ff00ff', 
+ 'green': '#008000', 
+ 'gray': '#808080', 
+ 'lime': '#00ff00', 
+ 'maroon': '#800000', 
+ 'navy': '#000080', 
+ 'olive': '#808000', 
+ 'purple': '#800080', 
+ 'red': '#ff0000', 
+ 'silver': '#c0c0c0', 
+ 'teal': '#008080', 
+ 'white': '#ffffff', 
+ 'yellow': '#ffff00'}
+\end{python}
+
+Usando DSU, escribe un programa que devuelve una lista ordenada de los nombres de los colores HTML4, ordenado de menor a mayor cantidad de rojo.
+
+\end{exercise}
+

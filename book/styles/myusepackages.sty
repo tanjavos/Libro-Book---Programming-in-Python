@@ -1,0 +1,51 @@
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp} % provide euro and other symbols
+\usepackage{longtable}
+\usepackage{booktabs,array}
+\usepackage{url}
+\usepackage{xurl}
+\usepackage{multirow}
+\usepackage{float}
+\floatplacement{figure}{H}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{exercises}
+%\usepackage[dvipsnames,svgnames*,x11names*]{xcolor}
+\usepackage{xcolor}
+%\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+%\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=false,   % Disable colored links
+    hidelinks          % Make hyperlinks invisible
+}
+
+\urlstyle{same} % disable monospaced font for URLs
+
+\usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+% Make links footnotes instead of hotlinks:
+%\DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{chngcntr}
+
+\usepackage{import}
+
+\usepackage{minitoc}

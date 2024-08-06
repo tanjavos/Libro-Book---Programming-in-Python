@@ -1,0 +1,42 @@
+\documentclass[fontsize=10pt,a4paper]{scrartcl}
+
+\usepackage{../../styles/myusepackages}
+\usepackage{../../styles/mypythonstyle}
+\usepackage{../../styles/myMCquestions}
+\usepackage{../../styles/myframedenv}
+%If graphics is listed before,some problems arise
+\usepackage{graphicx}
+
+\usepackage[english]{babel}
+\usepackage[english,verbose]{layout}
+\hypersetup{pdflang={es-ES}}
+
+\newcommand{\comments}[1]{}
+
+\include{book/configuration}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TITLE
+\title{Programming in Python\\ TEMA 11}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\Huge #1 \par}}{}{}
+}
+\makeatother
+\subtitle{\Large{Conjuntos}}
+\author{Universidad Politécnica de Valencia}
+\date{\academicyear{}}
+%%%%%%%%%%%%%%%%%%%END TITLE%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\include{disclaimer-ES}
+\include{book/Spanish/10_Conjuntos/tema10}
+\include{book/Spanish/10_Conjuntos/tema10_ejercicios}
+
+%\printbibliography
+\end{document}
+
+

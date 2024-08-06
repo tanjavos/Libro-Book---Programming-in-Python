@@ -1,0 +1,727 @@
+
+\hypertarget{las-tuplas-son-inmutables}{%
+\section{Las tuplas son inmutables}\label{las-tuplas-son-inmutables}}
+
+\index{tupla} \index{tipo!tupla} \index{secuencia}
+
+Una tupla\footnote{Dato curioso: La palabra ``tuple'' proviene de los
+  nombres dados a secuencias de números de distintas longitudes: simple,
+  doble, triple, cuádruple, quíntuple, séxtuple, séptuple, etc.} es una
+secuencia de valores similar a una lista. Los valores guardados en una
+tupla pueden ser de cualquier tipo, y son indexados por números enteros.
+La principal diferencia es que las tuplas son \emph{inmutables}. Las
+tuplas además son \emph{comparables}
+de modo que las listas de tuplas se pueden ordenar y también usar tuplas
+como valores para las claves en diccionarios de Python.
+
+Sintácticamente, una tupla es una lista de valores separados por comas:
+
+\begin{Verbatim}[frame=single]
+>>> t = 'a', 'b', 'c', 'd', 'e'
+\end{Verbatim}
+
+Aunque no es necesario, es común encerrar las tuplas entre paréntesis para ayudarnos a identificarlas rápidamente cuando revisemos código de Python:
+
+\index{paréntesis!tuplas}
+
+
+\begin{Verbatim}[frame=single]
+>>> t = ('a', 'b', 'c', 'd', 'e')
+\end{Verbatim}
+
+
+Para crear una tupla con un solo elemento, es necesario incluir una coma
+al final:
+
+\index{único} \index{tupla!único}
+
+
+\begin{Verbatim}[frame=single]
+>>> t1 = ('a',)
+>>> type(t1)
+<type 'tuple'>
+\end{Verbatim}
+
+
+Sin la coma, Python considera
+\texttt{(\textquotesingle{}a\textquotesingle{})} como una expresión con
+una cadena entre paréntesis que es evaluada como de tipo cadena
+(string):
+
+
+\begin{Verbatim}[frame=single]
+>>> t2 = ('a')
+>>> type(t2)
+<type 'str'>
+\end{Verbatim}
+
+
+Otra forma de construir una tupla es utilizando la función interna \texttt{tuple}. Sin argumentos, ésta crea una tupla vacía:
+
+\index{función tupla} \index{tupla!función}
+
+
+\begin{Verbatim}[frame=single]
+>>> t = tuple()
+>>> print(t)
+()
+\end{Verbatim}
+
+
+Si el argumento es una secuencia (cadena, lista, o tupla), el resultado
+de la llamada a \texttt{tuple} es una tupla con los elementos de la
+secuencia:
+
+
+\begin{Verbatim}[frame=single]
+>>> t = tuple('altramuces')
+>>> print(t)
+('a', 'l', 't', 'r', 'a', 'm', 'u', 'c', 'e', 's')
+\end{Verbatim}
+
+
+Dado que \texttt{tuple} es el nombre de un constructor, debería evitarse
+su uso como nombre de variable.
+
+La mayoría de los operadores de listas también funcionan en tuplas. El
+operador corchete para la indexación de sus elementos:
+
+\begin{Verbatim}[frame=single]
+>>> t = ('a', 'b', 'c', 'd', 'e')
+>>> print(t[0])
+'a'
+\end{Verbatim}
+
+Y el operador de concatenación (\pythoninline{+}) funciona con tuplas:
+
+\begin{Verbatim}[frame=single]
+>>> (1,2) + (3,4,5)
+  (1, 2, 3, 4, 5)
+>>> (2,) + (9,)
+  (2, 9)
+\end{Verbatim}
+
+Y el operador de repetición (\pythoninline{*}) funciona con tuplas:
+
+\begin{Verbatim}[frame=single]
+>>> 3 * (1,)
+  (1, 1, 1)
+>>> 5 * (1,2,3)
+  (1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3)
+\end{Verbatim}
+
+
+Y el operador de calcular el length (\pythoninline{len}) funciona con tuplas:
+
+\begin{Verbatim}[frame=single]
+>>> len ((4,5,5,6,7,8))
+  6
+>>> len()
+  TypeError: len() takes exactly one argument (0 given)
+>>> len(()) 
+  0
+\end{Verbatim}
+
+
+Y el operador de rebanado (slice) selecciona un rango de elementos.
+
+\index{operador rebanado} \index{rebanado!operador}
+\index{rebanado!tupla} \index{tupla!rebanado}
+
+
+\begin{Verbatim}[frame=single]
+>>> print(t[1:3])
+('b', 'c')
+\end{Verbatim}
+
+
+Pero si se intenta modificar uno de los elementos de la tupla, se
+produce un error:
+
+\index{excepción!TypeError} \index{TypeError}
+\index{asignación de objeto} \index{objeto!asignación de}
+
+
+\begin{Verbatim}[frame=single]
+>>> t[0] = 'A'
+TypeError: object doesn't support item assignment
+\end{Verbatim}
+
+
+No se puede modificar los elementos de una tupla, pero sí se puede
+reemplazar una tupla por otra:
+
+
+\begin{Verbatim}[frame=single]
+>>> t = ('A',) + t[1:]
+>>> print(t)
+('A', 'b', 'c', 'd', 'e')
+\end{Verbatim}
+
+
+\hypertarget{comparaciuxf3n-de-tuplas}{%
+\section{Comparación de tuplas}\label{comparaciuxf3n-de-tuplas}}
+
+\index{tupla!comparación} \index{comparación!tupla}
+\index{método de ordenamiento} \index{de ordenamiento!método}
+
+Los operadores de comparación funcionan con tuplas y otras secuencias.
+Python comienza comparando el primer elemento de cada secuencia. Si
+ambos elementos son iguales, pasa al siguiente elemento y así
+sucesivamente, hasta que encuentra elementos diferentes. Los elementos
+subsecuentes no son considerados (aunque sean muy grandes).
+
+
+\begin{Verbatim}[frame=single]
+>>> (0, 1, 2) < (0, 3, 4)
+True
+>>> (0, 1, 2000000) < (0, 3, 4)
+True
+\end{Verbatim}
+
+La función \texttt{sort} funciona de la misma manera. Ordena inicialmente por el primer elemento, pero en el caso de que ambos
+elementos sean iguales, ordena por el segundo elemento, y así sucesivamente.
+
+
+\section{Patrón de diseño: DSU}\label{DSU}
+
+La comparación de tuplas da lugar a un patrón de diseño llamado \emph{DSU} que podemos usar para ordenar secuencias de elementos según una determinada propiedad de estos elementos que usamos como índice. DSU consiste en:
+
+\begin{description}
+\item[Decorate] (Decora)
+una secuencia, construyendo una lista de tuplas con uno o más índices
+ordenados precediendo los elementos de la secuencia,
+\item[Sort] (Ordena)
+la lista de tuplas utilizando la función interna \texttt{sort}, y
+\item[Undecorate] (Quita la decoración)
+extrayendo los elementos ordenados de la secuencia.
+\end{description}
+
+\index{patrón DSU} \index{DSU!patrón}
+\index{patrón decorate-sort-undecorate}
+\index{decorate-sort-undecorate!patrón} \index{Romeo y Julieta}
+
+Por ejemplo, suponiendo una lista de palabras que se quieren ordenar de
+la más larga a la más corta:
+
+\begin{python}
+txt = 'Pero qué luz se deja ver allí'
+palabras = txt.split()
+
+#Decorar las palabras de la lista con su len
+t = list()
+for palabra in palabras:
+    t.append((len(palabra), palabra))
+
+#Ordenar
+t.sort(reverse=True)
+
+#Undecorar, quitando el len
+res = list()
+for longitud, palabra in t:
+    res.append(palabra)
+
+print(res)
+\end{python}
+
+El primer bucle genera una lista de tuplas, donde cada tupla es una
+palabra precedida por su longitud.
+
+\texttt{sort} compara el primer elemento (longitud) primero, y solamente
+considera el segundo elemento para desempatar. El argumento clave
+\texttt{reverse=True} indica a \texttt{sort} que debe ir en orden
+decreciente.
+
+\index{argumento clave} \index{clave!argumento} \index{recorrido}
+
+El segundo bucle recorre la lista de tuplas y construye una lista de
+palabras en orden descendente según la longitud. Las palabras de cuatro
+letras están ordenadas en orden alfabético \emph{inverso}, así que
+``deja'' aparece antes que ``allí'' en la siguiente lista.
+
+La salida del programa es la siguiente:
+
+\begin{Verbatim}
+['deja', 'allí', 'Pero', 'ver', 'qué', 'luz', 'se']
+\end{Verbatim}
+
+Por supuesto, la línea pierde mucho de su impacto poético cuando se
+convierte en una lista de Python y se almacena en orden descendente
+según la longitud de las palabras.
+
+
+\section{Asignación de tuplas}
+
+A menudo es útil intercambiar los valores de dos variables.
+Con asignaciones convencionales, tienes que utilizar una variable
+temporal.  Por ejemplo, para intercambiar \texttt{a} y \texttt{b}:
+
+\begin{Verbatim}
+>>> temp = a
+>>> a = b
+>>> b = temp
+\end{Verbatim}
+%
+Esta solución es incómoda; la \textbf{asignación de tupla} es más elegante:
+
+\begin{Verbatim}
+>>> a, b = b, a
+\end{Verbatim}
+%
+El lado izquierdo es una tupla de variables; el lado derecho es una tupla de
+expresiones.  Cada valor es asignado a su respectiva variable.
+Todas las expresiones en el lado derecho son evaluadas antes que cualquiera
+de las asignaciones.
+
+Ambos lados de la sentencia son tuplas, pero el lado izquierdo es una
+tupla de variables; el lado derecho es una tupla de expresiones. Cada
+valor en el lado derecho es asignado a su respectiva variable en el lado
+izquierdo. Todas las expresiones en el lado derecho son evaluadas antes
+de realizar cualquier asignación.
+
+El número de variables en el lado izquierdo y el número de valores en el
+lado derecho deben ser iguales:
+
+\index{excepción!ValueError} \index{ValueError}
+
+\begin{Verbatim}[frame=single]
+>>> a, b = 1, 2, 3
+  ValueError: too many values to unpack
+\end{Verbatim}
+
+Generalizando más, el lado derecho puede ser cualquier tipo de secuencia
+(cadena, lista, o tupla). De esta manera tenemos un mecanismo de empaquetado/desempaquetado utilizando tuplas.
+
+Por ejemplo, para dividir una dirección de
+e-mail en nombre de usuario y dominio, se podría escribir:
+
+\index{método split} \index{split!método} \index{dirección e-mail}
+
+\begin{Verbatim}[frame=single]
+>>> dir = 'monty@python.org'
+>>> nombreus, dominio = dir.split('@')
+\end{Verbatim}
+
+
+El valor de retorno de \texttt{split} es una lista con dos elementos; el
+primer elemento es asignado a \texttt{nombreus}, el segundo a
+\texttt{dominio}.
+
+
+\begin{Verbatim}[frame=single]
+>>> print(nombreus)
+  monty
+>>> print(dominio)
+  python.org
+\end{Verbatim}
+
+
+En el siguiente ejemplo tenemos una lista de dos elementos (la cual es una
+secuencia) y asignamos el primer y segundo elementos de la secuencia a
+las variables \texttt{x} y \texttt{y} en una única sentencia.
+
+\begin{Verbatim}[frame=single]
+>>> m = [ 'pásalo', 'bien' ]
+>>> x, y = m
+>>> x
+  'pásalo'
+>>> y
+  'bien'
+>>>
+\end{Verbatim}
+
+No es magia, Python traduce \emph{aproximadamente} la sintaxis de
+asignación de la tupla de este modo::\footnote{Python no traduce la
+sintaxis literalmente. Por ejemplo, si se trata de hacer esto con un
+diccionario, no va a funcionar como se podría esperar.}
+
+
+\begin{Verbatim}[frame=single]
+>>> m = [ 'pásalo', 'bien' ]
+>>> x = m[0]
+>>> y = m[1]
+>>> x
+  'pásalo'
+>>> y
+  'bien'
+>>>
+\end{Verbatim}
+
+Estilísticamente, cuando se utiliza una tupla en el lado izquierdo de la
+asignación, se omiten los paréntesis, pero lo que se muestra a
+continuación es una sintaxis igualmente válida:
+
+
+\begin{Verbatim}[frame=single]
+>>> m = [ 'pásalo', 'bien' ]
+>>> (x, y) = m
+>>> x
+'pásalo'
+>>> y
+'bien'
+>>>
+\end{Verbatim}
+
+
+\section{Tuplas como valores de retorno}
+\index{tupla}
+\index{valor!tupla}
+\index{valor de retorno!tupla}
+\index{función, tupla como valor de retorno}
+
+Estrictamente hablando, una función puede devolver solo un valor de retorno, pero
+si el valor es una tupla, el efecto es el mismo que devolver
+múltiples valores.  Por ejemplo, si quieres dividir dos enteros
+y calcular el cociente y el resto, es ineficiente
+calcular \texttt{x//y} y luego \texttt{x\%y}.  Es mejor calcular
+ambos al mismo tiempo.
+\index{divmod}
+
+La función incorporada \texttt{divmod} toma dos argumentos y
+devuelve una tupla de dos valores: el cociente y el resto.
+Puedes almacenar el resultado como una tupla:
+
+\begin{Verbatim}[frame=single]
+>>> t = divmod(7, 3)
+>>> t
+(2, 1)
+\end{Verbatim}
+%
+O bien, utilizar asignación de tupla para almacenar los elementos por separado:
+\index{asignación!de tupla}
+\index{tupla!asignación de}
+
+\begin{Verbatim}[frame=single]
+>>> cociente, resto = divmod(7, 3)
+>>> cociente
+2
+>>> resto
+1
+\end{Verbatim}
+%
+Aquí hay un ejemplo de una función que devuelve una tupla:
+
+\begin{Verbatim}[frame=single]
+def min_max(t):
+    return min(t), max(t)
+\end{Verbatim}
+%
+\texttt{max} y \texttt{min} son funciones incorporadas que encuentran
+los elementos más grande y más pequeño en una secuencia.  \verb"min_max"
+calcula ambos y devuelve una tupla de dos valores.
+\index{max, función}
+\index{función!max}
+\index{min, función}
+\index{función!min}
+
+\section{Funciones con una cantidad variable de parámetros}
+\label{gather}
+
+Las funciones pueden tomar una cantidad variable de argumentos. Un nombre de parámetro
+que comienza con \texttt{*} hace una \textbf{reunión} de parametros en
+una tupla.  Por ejemplo, \texttt{printall}
+toma cualquier cantidad de argumentos y los imprime:
+
+\begin{python}[frame=single]
+def printall(*args):
+    print(args)
+\end{python}
+%
+El parámetro de reunión puede tener cualquier nombre que quieras, pero \texttt{args} es
+convencional.  Aquí se muestra cómo opera la función:
+
+\begin{Verbatim}[frame=single]
+>>> printall(1, 2.0, '3')
+  (1, 2.0, '3')
+>>> printall(2.3, '3', 'abc', 34)
+  (2.3, '3', 'abc', 34)
+\end{Verbatim}
+%
+El complemento de la reunión es la \textbf{dispersión}.  Si tienes una
+secuencia de valores y quieres pasarlo a una función
+como múltiples argumentos, puedes utilizar el operador \texttt{*}.
+Por ejemplo, \texttt{divmod} toma exactamente dos argumentos;
+no funciona con una tupla:
+\index{dispersión}
+\index{argumento!dispersión de}
+\index{TypeError}
+\index{excepción!TypeError}
+
+\begin{Verbatim}[frame=single]
+>>> t = (7, 3)
+>>> divmod(t)
+TypeError: divmod expected 2 arguments, got 1
+\end{Verbatim}
+%
+Sin embargo, si dispersas la tupla, funciona:
+
+\begin{Verbatim}[frame=single]
+>>> divmod(*t)
+(2, 1)
+\end{Verbatim}
+%
+Muchas de las funciones incorporadas utilizan
+tuplas de argumentos de longitud variable.  Por ejemplo, \texttt{max}
+y \texttt{min} pueden tomar cualquier cantidad de argumentos:
+\index{max, función}
+\index{función!max}
+\index{min, función}
+\index{función!min}
+
+\begin{Verbatim}[frame=single]
+>>> max(1, 2, 3)
+3
+\end{Verbatim}
+%
+Pero \texttt{sum} no puede.
+\index{sum, función}
+\index{función!sum}
+
+\begin{Verbatim}[frame=single]
+>>> sum(1, 2, 3)
+TypeError: sum expected at most 2 arguments, got 3
+\end{Verbatim}
+%
+Una función llamada que tome cualquier cantidad de argumentos y devuelva su suma lo podemos escribir nosotros como por ejemplo abajo:
+
+\begin{python}
+def suma_todo(*items):
+    if (not items):
+        return items
+    
+    resultado = items[0]
+    for item in items[1:]:
+        resultado = resultado + item
+    return resultado
+\end{python}
+
+
+Lo primero que hacemos es verificar si recibimos algún argumento. Si no, volvemos
+\pythoninline{items}, una tupla vacía. Esto es necesario porque el resto de la función requiere que
+sabemos que tenemos un elemento en el índice 0. Observa que no buscamos una tupla vacía comparándola con () o marcando
+que su longitud es 0. Más bien, decimos 
+\pythoninline{(not items)}, lo que solicita el valor booleano de nuestra tupla. Debido a que una secuencia de Python vacía es falsa en un contexto booleano, obtenemos
+False si \pythoninline{items} está vacío y True en caso contrario.
+\newpage
+
+\begin{Verbatim}[frame=single]
+>>> suma_todo()
+()
+>>> suma_todo(2)
+2
+>>> suma_todo(10, 20, 30, 40)
+100
+>>> suma_todo('a', 'b', 'c', 'd')
+'abcd'
+>>> suma_todo([10, 20, 30], [40, 50, 60], [70, 80])
+[10, 20, 30, 40, 50, 60, 70, 80]
+\end{Verbatim}
+
+\hypertarget{diccionarios-y-tuplas}{%
+\section{Diccionarios y tuplas}\label{diccionarios-y-tuplas}}
+
+\index{diccionario} \index{método items} \index{items!método}
+\index{par clave-valor}
+
+Los diccionarios tienen un método llamado \texttt{items} que podemos convertir a una
+lista de tuplas, donde cada tupla es un par clave-valor:
+
+
+\begin{Verbatim}[frame=single]
+>>> d = {'a':10, 'b':1, 'c':22}
+>>> t = list(d.items())
+>>> print(t)
+[('b', 1), ('a', 10), ('c', 22)]
+\end{Verbatim}
+
+
+Como sería de esperar en un diccionario, los elementos no tienen ningún
+orden en particular.
+
+Aun así, puesto que la lista de tuplas es una lista, y las tuplas son
+comparables, ahora se puede ordenar la lista de tuplas. Convertir un
+diccionario en una lista de tuplas es una forma de obtener el contenido
+de un diccionario ordenado según sus claves:
+
+\begin{Verbatim}[frame=single]
+>>> d = {'a':10, 'b':1, 'c':22}
+>>> t = list(d.items())
+>>> t
+[('b', 1), ('a', 10), ('c', 22)]
+>>> t.sort()
+>>> t
+[('a', 10), ('b', 1), ('c', 22)]
+\end{Verbatim}
+
+La nueva lista está ordenada en orden alfabético ascendente de acuerdo
+al valor de sus claves.
+
+La combinación de \texttt{items}, asignación de tuplas, y \texttt{for},
+produce un buen patrón de diseño de código para recorrer las claves y
+valores de un diccionario en un único bucle:
+
+\begin{Verbatim}[frame=single]
+for clave, valor in list(d.items()):
+    print(valor, clave)
+\end{Verbatim}
+
+
+Este bucle tiene dos \emph{variables de iteración}, debido a que
+\texttt{items} retorna una lista de tuplas y \texttt{clave,\ valor} es
+una asignación en tupla que itera sucesivamente a través de cada uno de
+los pares clave-valor del diccionario.
+
+Para cada iteración a través del bucle, tanto \texttt{clave} y
+\texttt{valor} van pasando al siguiente par clave-valor del diccionario
+(todavía en orden de dispersión).
+
+La salida de este bucle es:
+
+\begin{Verbatim}[frame=single]
+10 a
+1 b
+22 c
+\end{Verbatim}
+
+
+De nuevo, las claves están en orden de dispersión (es decir, ningún
+orden en particular).
+
+Si se combinan esas dos técnicas, se puede imprimir el contenido de un
+diccionario ordenado por el \emph{valor} almacenado en cada par
+clave-valor.
+
+Para hacer esto, primero se crea una lista de tuplas donde cada tupla es
+\texttt{(valor,\ clave)}. El método \texttt{items} dará una lista de
+tuplas \texttt{(clave,\ valor)}, pero esta vez se pretende ordenar por
+valor, no por clave. Una vez que se ha construido la lista con las
+tuplas clave-valor, es sencillo ordenar la lista en orden inverso e
+imprimir la nueva lista ordenada.
+
+
+\begin{Verbatim}[frame=single]
+>>> d = {'a':10, 'b':1, 'c':22}
+>>> l = list()
+>>> for clave, valor in d.items() :
+...     l.append( (valor, clave) )
+...
+>>> l
+[(10, 'a'), (1, 'b'), (22, 'c')]
+>>> l.sort(reverse=True)
+>>> l
+[(22, 'c'), (10, 'a'), (1, 'b')]
+>>>
+\end{Verbatim}
+
+Al construir cuidadosamente la lista de tuplas para tener el valor como
+el primer elemento de cada tupla, es posible ordenar la lista de tuplas
+y obtener el contenido de un diccionario ordenado por valor.
+
+
+\hypertarget{uso-de-tuplas-como-claves-en-diccionarios}{%
+\section{Uso de tuplas como claves en
+diccionarios}\label{uso-de-tuplas-como-claves-en-diccionarios}}
+
+\index{tupla!como clave en diccionario} \index{hashable}
+
+Dado que las tuplas son \textbf{dispersables} \emph{(hashable)} y las
+listas no, si se quiere crear una clave \textbf{compuesta} para usar en
+un diccionario, se debe utilizar una tupla como clave.
+
+Usaríamos por ejemplo una clave compuesta si quisiéramos crear un
+directorio telefónico que mapea pares appellido, nombre con números
+telefónicos. Asumiendo que hemos definido las variables
+\texttt{apellido}, \texttt{nombre}, y \texttt{número}, podríamos
+escribir una sentencia de asignación de diccionario como sigue:
+
+
+\begin{Verbatim}[frame=single]
+directorio[apellido,nombre] = numero
+\end{Verbatim}
+
+
+La expresión entre corchetes es una tupla. Podríamos utilizar asignación
+de tuplas en un bucle \texttt{for} para recorrer este diccionario.
+
+\index{tupla!entre corchetes}
+
+\begin{Verbatim}[frame=single]
+for apellido, nombre in directorio:
+    print(nombre, apellido, directorio[apellido,nombre])
+\end{Verbatim}
+
+
+Este bucle recorre las claves en \texttt{directorio}, las cuales son
+tuplas. Asigna los elementos de cada tupla a \texttt{apellido} y
+\texttt{nombre}, después imprime el nombre y el número telefónico
+correspondiente.
+
+
+
+
+
+
+
+
+\hypertarget{depuraciuxf3n}{%
+\section{Depuración}\label{depuraciuxf3n}}
+
+\index{depuración} \index{estructura de datos} \index{error de modelado}
+\index{de modelado!error}
+
+Las listas, diccionarios y tuplas son conocidas de forma genérica como
+\emph{estructuras de datos}; en este capítulo estamos comenzando a ver
+estructuras de datos compuestas, como listas de tuplas, y diccionarios
+que contienen tuplas como claves y listas como valores. Las estructuras
+de datos compuestas son útiles, pero también son propensas a lo que yo
+llamo \emph{errores de modelado}; es decir, errores causados cuando una
+estructura de datos tiene el tipo, tamaño o composición incorrecto, o
+quizás al escribir una parte del código se nos olvidó cómo era el
+modelado de los datos y se introdujo un error. Por ejemplo, si estás
+esperando una lista con un entero y recibes un entero solamente (no en
+una lista), no funcionará.
+
+\hypertarget{glosario}{%
+\section{Glosario}\label{glosario}}
+
+\begin{description}
+\tightlist
+\item[comparable]
+Un tipo en el cual un valor puede ser revisado para ver si es mayor que,
+menor que, o igual a otro valor del mismo tipo. Los tipos que son
+comparables pueden ser puestos en una lista y ordenados.
+\index{comparable}
+\item[estructura de datos]
+Una collección de valores relacionados, normalmente organizados en
+listas, diccionarios, tuplas, etc. \index{estructura de datos}
+\item[DSU]
+Abreviatura de ``decorate-sort-undecorate (decorar-ordenar-quitar la
+decoración)'', un patrón de diseño que implica construir una lista de
+tuplas, ordenarlas, y extraer parte del resultado. \index{patrón DSU}
+\item[reunir]
+La operación de tratar una secuencia como una lista de argumentos.
+\index{reunir}
+\item[hashable (dispersable)]
+Un tipo que tiene una función de dispersión. Los tipos inmutables, como
+enteros, flotantes y cadenas son dispersables (hashables); los tipos
+mutables como listas y diccionarios no lo son. \index{hashable}
+\item[dispersar]
+La operación de tratar una secuencia como una lista de argumentos.
+\index{dispersar}
+\item[modelado (de una estructura de datos)]
+Un resumen del tipo, tamaño, y composición de una estructura de datos.
+\index{modelado}
+\item[singleton]
+Una lista (u otra secuencia) con un único elemento. \index{singleton}
+\item[tupla]
+Una secuencia inmutable de elementos. \index{tupla}
+\item[asignación por tuplas]
+Una asignación con una secuencia en el lado derecho y una tupla de
+variables en el izquierdo. El lado derecho es evaluado y luego sus
+elementos son asignados a las variables en el lado izquierdo.
+\index{asignación por tuplas} \index{tupla!asignación}
+\end{description}
+
+
+
+

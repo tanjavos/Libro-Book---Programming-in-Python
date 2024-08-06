@@ -1,0 +1,40 @@
+\documentclass[fontsize=10pt,a4paper]{scrartcl}
+
+\usepackage{../../styles/myusepackages}
+\usepackage{../../styles/mypythonstyle}
+\usepackage{../../styles/myMCquestions}
+\usepackage{../../styles/myframedenv}
+%If graphics is listed before,some problems arise
+\usepackage{graphicx}
+
+\usepackage[english]{babel}
+\usepackage[english,verbose]{layout}
+\hypersetup{pdflang={es-ES}}
+
+\include{book/configuration}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TITLE
+\title{Programming in Python\\ TEMA 9}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\Huge #1 \par}}{}{}
+}
+\makeatother
+\subtitle{\Large{Tuplas}}
+\author{Universidad Politécnica de Valencia}
+\date{\academicyear{}}
+%%%%%%%%%%%%%%%%%%%END TITLE%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\include{disclaimer-ES}
+\include{book/Spanish/09_Tuplas/tema9}
+\include{book/Spanish/09_Tuplas/tema9_ejercicios}
+
+%\printbibliography
+\end{document}
+
+

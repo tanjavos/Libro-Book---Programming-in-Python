@@ -1,0 +1,41 @@
+\documentclass[fontsize=10pt,a4paper]{scrartcl}
+
+\usepackage{book/styles/myusepackages}
+\usepackage{book/styles/mypythonstyle}
+\usepackage{book/styles/myMCquestions}
+\usepackage{book/styles/myframedenv}
+%If graphics is listed before,some problems arise
+\usepackage{graphicx}
+
+\usepackage[spanish]{babel}
+\usepackage[spanish,verbose]{layout}
+\hypersetup{pdflang={es-ES}}
+
+\include{book/configuration}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TITLE
+\title{Programación en Python\\ TEMA 2}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\Large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{\Large{Valores, variables, tipos, operadores y expresiones.}}
+\author{Universidad Politécnica de Valencia}
+\date{\academicyear{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\include{book/disclaimer-ES}
+\include{tema2}
+\include{book/Spanish/02_Valores_Variables_Tipos_etc/tema2_ejercicios}
+\include{book/Spanish/02_Valores_Variables_Tipos_etc/tema2_ejercicios_tipo_test}
+
+%\printbibliography
+\end{document}
+
+

@@ -1,0 +1,41 @@
+\documentclass[fontsize=10pt,a4paper]{scrartcl}
+
+\usepackage{../../styles/myusepackages}
+\usepackage{../../styles/mypythonstyle}
+\usepackage{../../styles/myMCquestions}
+\usepackage{../../styles/myframedenv}
+%If graphics is listed before,some problems arise
+\usepackage{graphicx}
+
+\usepackage[english]{babel}
+\usepackage[english,verbose]{layout}
+\hypersetup{pdflang={en-EN}}
+
+\include{book/configuration}
+
+%%%%%%%%%%%%%%%%%%% TITLE %%%%%%%%%%%%%%%%%%%%%%
+\title{Programming in Python\\ UNIT 3}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\Huge #1 \par}}{}{}
+}
+\makeatother
+\subtitle{\Large{Conditionals}}
+\author{Universidad Politécnica de Valencia}
+\date{\academicyear}
+%%%%%%%%%%%%%%%%%%%END TITLE%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\include{disclaimer-EN}
+\subimport{}{theme3}
+
+%\printbibliography
+
+\end{document}
+
+
+
+

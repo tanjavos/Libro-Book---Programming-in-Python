@@ -1,0 +1,310 @@
+
+\section{Ejercicios}
+
+
+\begin{exercise}
+El alfabeto de la {\em International Civil Aviation Organization }(ICAO) asigna un código de palabras a las letras del alfabeto inglés (alfa para la A, bravo para la B, etc.), de forma que las combinaciones de letras críticas se pueden pronunciar y pueden ser entendidas por aquellos que transmiten y reciben mensajes de voz por radio o teléfono, independientemente de su idioma nativo. 
+Imagina que tenemos el siguiente diccionario en Python asignado en la variable \texttt{dic\_ICAO}:
+
+\begin{small}
+\begin{python}
+dic_ICAO = {
+    'a':'alfa',
+    'b':'bravo',
+    'c':'charlie',
+    'd':'delta',
+    'e':'echo',
+    'f':'foxtrot',
+    'g':'golf',
+    'h':'hotel',
+    'i':'india',
+    'j':'juliett',
+    'k':'kilo',
+    'l':'lima',
+    'm':'mike',
+    'n':'november',
+    'o':'oscar',
+    'p':'papa',
+    'q':'quebec',
+    'r':'romeo',
+    's':'sierra',
+    't':'tango',
+    'u':'uniform',
+    'v':'victor',
+    'w':'whiskey',
+    'x':'x-ray',
+    'y':'yankee',
+    'z':'zulu'
+    }
+\end{python}
+\end{small}
+
+Diseña una función que reciba un texto y sea capaz de traducirlo en la lista de palabras ICAO. Puedes usar la siguiente plantilla (template) que tambien esta en PoliformaT.
+
+\begin{python}
+def traducir_a_ICAO (texto):
+
+    """
+    Esta función traduce un texto al alfabeto ICAO definido en 
+    el diccionario dic_ICAO.
+
+    Entradas: Un texto a traducir
+    Salidas:  Un texto traducido a ICAO
+    Restricciones: solo funciona con texto de tipo str.
+    """
+
+#    <TU SOLUCIÓN AQUI>
+
+
+@pytest.mark.parametrize("testcase, entrada, salida_esperada",[
+
+#    <TUS CASOS DE TEST AQUI>
+    
+])
+
+def test_traducir_a_ICAO(testcase, entrada, salida_esperada):
+    assert traducir_a_ICAO(entrada) == salida_esperada,\
+           "caso {0}".format(testcase)
+
+
+\end{python}
+\end{exercise}
+
+
+\begin{exercise}
+Considera la siguiente función en Python:
+
+\begin{python}
+def traducir(dic, source):
+    result = dic[source[0]]
+    for i in range(1, len(source)):
+        result = result + dic[source[i]]
+    return result
+\end{python}
+
+Imagina también que tenemos los siguientes diccionarios definidos:
+
+\begin{small}
+\begin{python}
+dic_ej1 = {
+    1: 'one',
+    2: 'two',
+    3: 'three'
+    }
+
+dic_ej2 = {
+    1: [1],
+    2: [2],
+    3: [3]
+    }
+
+dic_ej3 = {
+    1: 1,
+    2: 2,
+    3: 3
+    }
+
+dic_ej4 = {
+    '1': 1,
+    '2': 2,
+    '3': 3
+    }
+\end{python}
+\end{small}
+
+¿Qué respuesta da Python para las siguientes instrucciones?
+
+\begin{small}
+\begin{Verbatim}[frame=single]
+1. >>> traducir (dic_ej1, (1,2,1))
+2. >>> traducir (dic_ej1, [1,2,1])
+3. >>> traducir (dic_ej2, [1,2,1])
+4. >>> traducir (dic_ej2, 123)
+5. >>> traducir (dic_ej3, [1,2,1])
+6. >>> traducir (dic_ej4, [1,2,1])
+7. >>> traducir (dic_ej4, "123")
+8. >>> traducir (dic_ej4, ['1', '2', '3'])
+\end{Verbatim}
+\end{small}
+\end{exercise}
+
+\solucion{
+>>> traducir (dic_ej1, (1,2,1))
+'onetwoone'
+>>> traducir (dic_ej1, [1,2,1])
+'onetwoone'
+>>> traducir (dic_ej2, [1,2,1])
+[1, 2, 1]
+>>> traducir (dic_ej2, 123)
+result = dic[input[0]]
+TypeError: 'int' object is not subscriptable
+>>> traducir (dic_ej3, [1,2,1])
+4
+>>> traducir (dic_ej4, [1,2,1])
+result = dic[input[0]]
+KeyError: 1
+>>> traducir (dic_ej4, "123")
+6
+>>> traducir (dic_ej4, ['1', '2', '3'])
+6
+}
+
+
+\begin{exercise}
+Escribe la documentación para la función \pythoninline{traducir}, que hace la función para que queda claro para que parámetros funciona y para que parámetros lanza excepciones y cuales.
+\end{exercise} 
+
+
+\begin{exercise}
+Los siguientes tests son para testear algunos de los ejemplos de más arriba (i.e. 1 hasta 8). 
+
+\begin{small}
+\begin{python}
+@pytest.mark.parametrize("testcase, input1, input2, output",[
+(a, dic_ej2, [1,2,1], [1,2,1]),
+(b, dic_ej1, (1,2,1), 'onetwoone'),   
+(c, dic_ej1, [1,2,1], 'onetwoone'),  
+(d, dic_ej3, [1,2,1], 4),
+(e, dic_ej4, ['1', '2', '3'], 6)
+(f, dic_ej4, "123", 6),
+])
+
+def test_traducir(testcase, input1, input2, output):
+    assert traducir(input1, input2) == output,\
+           "caso {0}".format(testcase)
+\end{python}
+\end{small}     
+
+¿Con qué números correspondan \pythoninline{a, b, c, d, e, f}?
+\end{exercise} 
+
+
+\solucion{b=1, c=2, a=3, d=5, f= 7, e = 8}
+
+
+\begin{exercise}
+Hemos visto que el metodo \pythoninline{traducir} lanza un \pythoninline{TypeError} cuando el \pythoninline{source} tiene un tipo que no es {\em subscriptable}. Tambien vimos un
+\pythoninline{KeyError} cuando el clave con que intentamos acceder al diccionario no coincide con el tipo del diccionario.
+
+Para escribir \pythoninline{pytest} que verifican que salen estas excepciones se puede escribir los siguientes tests:
+
+\begin{small}
+\begin{python}
+@pytest.mark.parametrize("testcase, input1, input2, output",[
+(g, dic_ej2, 123, pytest.raises(TypeError)),   
+(h, dic_ej4, [1,2,1], pytest.raises(KeyError))
+])
+   
+def test_traducir_exceptions(testcase, input1, input2, output):
+    with output:
+        traducir(input1, input2)
+\end{python}
+\end{small}     
+¿Con qué números correspondan \pythoninline{g, h}?
+\end{exercise} 
+
+\begin{exercise}
+Vamos a implementar un programa para controlar el stock de una frutería. Para ello, tenemos dos diccionarios: 
+
+\begin{small}
+\begin{python}
+precio = {
+    "platano": 3,
+    "manzana": 2,
+    "naranja": 2.5,
+    "pera": 3.5
+    }
+
+stock = {
+    "platano": 20,
+    "manzana": 30,
+    "naranja": 15,
+    "pera": 30
+    }
+\end{python}
+\end{small}
+
+Empezamos con una función \pythoninline{valor_del_stock} que calcula, como indica su nombre, el valor que tiene el stock.
+
+¿Con qué valores vas a ejecutar tu función para testearlo bien?
+\end{exercise} 
+
+\begin{exercise}  Ahora implementa una función \pythoninline{venta} que simula una venta.
+Para ello, la función recibe como parámetros el nombre de la fruta que se vende y la cantidad. La función deberá descontar la cantidad vendida del stock. Si no hay stock, se mostrará un mensaje de error. 
+
+¿Con qué valores vas a ejecutar tu función para testearlo bien?
+\end{exercise} 
+
+\begin{exercise} Ahora implementa una función \pythoninline{compra} que simula una compra.
+Para ello, la función recibe como parametros el nombre de la fruta que se ha comprado y la cantidad. La función deberá actualizar la cantidad comprado al stock. 
+Si este producto no ha aparecido antes en el stock (i.e. melones), hay que añadirlo.
+
+¿Con qué valores vas a ejecutar tu función para testearlo bien?
+\end{exercise} 
+
+\begin{exercise}
+Una anagrama es una palabra o frase que se forma al reorganizar las letras de otra palabra o frase. Por ejemplo, ''amor'' es un anagrama de ''roma'', y ''frase'' 
+es una anagrama de ''fresa''. Escriba una función \pythoninline{is_anagram (word1, word2)} que verifique si las dos palabras son anagramas entre sí. Si es así, la función debería devolver True, y False de lo contrario. La función no debe distinguir entre letras mayúsculas y minúsculas.
+Puedes usar las siguientes ejemplos para testear la función con pytest:
+
+\begin{longtable}{|l|l|l|}
+\hline
+testcase número & input & output esperado   \\ \hline
+1  & (frase, fresa)   & True \\ 
+2  & (panel, nepal)     & True\\
+3 & (Alumno, Molan)     & False \\
+4 & (Hola, Caracola)      & False \\
+5 & (Rectificable, certificable)  & True \\
+\hline
+\end{longtable}
+
+\end{exercise} 
+
+\begin{exercise}
+Imagine un pequeño hotel con cuatro habitaciones de cuatro camas (con los números elegidos arbitrariamente 101, 102, 201 y 202). Vamos a escribir un programa Python para el personal del hotel para ayudarlos a realizar un seguimiento de la ocupación de la habitación y registrar la entrada y salida de los huéspedes. 
+
+El código Python para la interacción del usuario ya existe:
+
+\begin{small}
+\begin{python}
+room_occupancy = {101:[], 102:[], 201:[], 202:[]} 
+while True:
+    print("These are your options:")
+    print("1 - View current room occupancy.")
+    print("2 - Check guest in.")
+    print("3 - Check guest out.")
+    print("4 - Exit program.")
+    choice = input("Please choose what you want to do: ") 
+    if choice == "1":
+        print_occupancy(room_occupancy)
+    elif choice == "2":
+        guest = input("Enter name of guest: ")
+        room = int(input("Enter room number: "))
+        check_in(room_occupancy, guest, room)
+    elif choice == "3":
+        guest = input("Enter name of guest: ")
+        room = int(input("Enter room number: "))
+        check_out(room_occupancy, guest, room)
+    elif choice == "4":
+        print("Goodbye!")
+        break
+    else:
+        print("Invalid input, try again.")
+\end{python}
+\end{small}
+
+Vamos a escribir un par de funciones más:
+
+
+\begin{itemize}
+\item \pythoninline{print_occupancy} 
+simplemente debe imprimir una lista de todas las habitaciones y los huéspedes que se registran actualmente.
+
+\item \pythoninline{check_in} 
+debería agregar un invitado a una habitación. Si se proporciona un número de habitación no existente o si la habitación elegida ya está llena, se debe imprimir el mensaje correspondiente. Puede haber dos invitados con el mismo nombre en una habitación
+
+\item \pythoninline{check_out} 
+debe eliminar a un invitado de una habitación. Si se pasa un número de habitación o nombre de invitado incorrecto, se debe imprimir el mensaje correspondiente
+\end{itemize}
+
+\end{exercise} 

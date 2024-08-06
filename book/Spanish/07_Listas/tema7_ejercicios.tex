@@ -1,0 +1,231 @@
+\section*{Ejercicios}
+\addcontentsline{toc}{section}{Ejercicios}
+
+\begin{exercise}
+Escriba una función (\verb@match_words@) en python que, dado una lista de strings, cuenta el número de cadenas que tiene las siguientes características:
+\begin{itemize}
+\item la longitud de la cadena es mas de 2
+\item el primer y el último carácter son los mismos
+\end{itemize}
+
+Tu función tiene que pasar los siguientes tests:\\
+
+\begin{small}
+\begin{python}
+def test_match_words():
+    assert match_words(["aba", "bb", "abc", ""]) == 1
+    assert match_words(["   ", " a "]) == 2
+    assert match_words([]) == 0
+    assert match_words(["aba"]) == 1
+    assert match_words(["", "a", "aa", "ab", "aba", "wrt"]) == 1
+    assert match_words(["1234", "3453", "11", "12"]) == 1
+    assert match_words([[1,2,1], [3,4,5,6], [2,3,4,5,2,2,2]]) == 2
+    assert match_words([(1,2,1), (3,4,5,6), (2,3,4,5,2,2,2)]) == 2  
+\end{python}
+\end{small}
+\end{exercise}
+
+\begin{exercise} 
+Escribir una función (\verb@mayor_a_media_list@) en Python que dado una lista devuelve una lista en que todos los elementos que son mayor a la media de todos los elementos se han eliminado. Tu función tiene que pasar los siguientes tests:
+
+\begin{small}
+\begin{python}
+@pytest.mark.parametrize("testcase, input, output",[
+(1, [2, 3, 4, 5], [2,3]),   
+(2, [1,1,1,1],[1,1,1,1] ),              
+(3, [], []),
+(4, [0,0], [0,0]),
+(5, [-1,-2,-3], [-2,-3])])              
+
+def test_mayor_a_media_list(testcase, input, output):
+    assert mayor_a_media_list(input) == output,\
+           "caso {0}".format(testcase)
+\end{python}
+\end{small}
+
+\end{exercise}
+
+\begin{exercise}
+\label{duplicate}
+\index{duplicado}
+\index{unicidad}
+
+Escribe una función llamada \pythoninline{tiene_duplicados} que tome
+una lista y devuelva \pythoninline{True} si hay algún elemento que
+aparece más de una vez.  No debería modificar la lista
+original. No olvides tus pytests.
+
+
+\end{exercise}
+
+
+
+
+\begin{exercise}
+
+Escribe una función llamada \pythoninline{nested_sum} que tome una lista de listas
+de enteros y sume los elementos de todas las listas anidadas.
+Por ejemplo:
+
+\begin{Verbatim}[frame=single]
+>>> t = [[1, 2], [3], [4, 5, 6]]
+>>> nested_sum(t)
+21
+\end{Verbatim}
+
+Tienes que testear tu programa con pytest. Puedes usar por ejemplo los siguientes casos de test:
+
+\begin{python}
+import pytest
+@pytest.mark.parametrize("testcase, entrada, salida_esperada",[
+(1, [[2,3,4], [0,0], [-4], [-5, 8]], 8),   
+(2, [], 0),              
+(3, [[],[],[]], 0),
+(4, [[5]], 5),
+(5, [[], [-8]], -8)]
+)              
+
+def test_nested_sum(testcase, entrada, salida_esperada):
+    assert nested_sum(entrada) == salida_esperada, "caso {0}".format(testcase)
+\end{python}
+
+
+\end{exercise}
+
+\begin{exercise}
+\label{cumulative}
+\index{suma acumulativa}
+
+Escribe una función llamada \pythoninline{acumular_sum} que tome una lista de números y
+devuelva la suma acumulativa, es decir, una lista nueva donde el $i$-ésimo
+elemento es la suma de los primeros $i+1$ elementos de la lista original.
+Por ejemplo:
+
+\begin{Verbatim}[frame=single]
+>>> t = [1, 2, 3]
+>>> acumular_sum(t)
+[1, 3, 6]
+\end{Verbatim}
+
+Tienes que testear tu programa con pytest. Puedes usar por ejemplo los siguientes casos de test:
+
+\begin{python}
+@pytest.mark.parametrize("testcase, entrada, salida_esperada",[
+(1, [2,2,3,3,4,4,5,5], [2, 4, 7, 10, 14, 18, 23, 28]),   
+(2, [], []),              
+(3, [12,2,0,3,0,4,-6,5,15], [12, 14, 14, 17, 17, 21, 15, 20, 35]),
+(4, [5], [5]),
+(5, [-8,8], [-8,0])]
+)              
+
+def test_acumular_sum(testcase, entrada, salida_esperada):
+    assert acumular_sum(entrada) == salida_esperada, "caso {0}".format(testcase)
+\end{python}
+
+
+\end{exercise}
+
+\begin{exercise}
+
+Escribe una función llamada \pythoninline{medio1} que tome una lista y
+devuelva una nueva lista que contenga todos los elementos excepto el primero
+y el último.  Por ejemplo:
+
+\begin{Verbatim}[frame=single]
+>>> t = [1, 2, 3, 4]
+>>> medio1(t)
+[2, 3]
+\end{Verbatim}
+
+Tienes que testear tu programa con pytest. Puedes usar por ejemplo los siguientes casos de test:
+
+\begin{python}
+@pytest.mark.parametrize("testcase, entrada, salida_esperada",[
+(1, [2,2,3,3,4,4,5,5], [2,3,3,4,4,5]),   
+(2, [], []),              
+(3, [12], []),
+(4, [5,6], []),
+(5, [8,8,8], [8])]
+)              
+
+def test_medio1(testcase, entrada, salida_esperada):
+    assert medio1(entrada) == salida_esperada, "caso {0}".format(testcase)
+\end{python}
+
+\end{exercise}
+
+\begin{exercise}
+
+Escribe una función llamada \pythoninline{medio2} que tome una lista, la modifique eliminando el primer y último elemento, y devuelve nada (en Python eso es \pythoninline{None}).
+Por ejemplo:
+
+\begin{Verbatim}[frame=single]
+>>> t = [1, 2, 3, 4]
+>>> medio2(t)
+[2, 3]
+>>> t
+[2, 3]
+\end{Verbatim}
+
+Nota que aunque parece mucho a la función \pythoninline{medio1} del ejercicio anterior, hay una diferencias a la hora de escribir los pytests. La función no devuelve ningún resultado, pero modifica directamente el argumento. Entonces primero tenemos que llamar la función y después tenemos que chequear que la lista se ha cambiado como esperamos.
+
+
+\begin{python}
+@pytest.mark.parametrize("testcase, entrada, salida_esperada",[
+(1, [2,2,3,3,4,4,5,5], [2,3,3,4,4,5]),   
+(2, [], []),              
+(3, [12], []),
+(4, [5,6], []),
+(5, [8,8,8], [8])]
+)              
+
+def test_medio2(testcase, entrada, salida_esperada):
+    t = entrada
+    medio2(t)
+    assert t == salida_esperada, "caso {0}".format(testcase)
+\end{python}
+
+\end{exercise}
+
+
+
+\begin{exercise}
+Escribir una función (\texttt{sum\_of\_diagonal}) en python que dado una matriz $m$ de integers calcula la suma de los integers que estan en el diagonal.
+Por ejemplo:
+
+$
+\texttt{sum\_of\_diagonal}(
+\begin{bmatrix}
+    1 & 2 & 3 & 4 \\
+    2 & 4 & 6 & 1 \\
+    0 & 5 & 8 & 2 \\
+    2 & 9 & 6 & 3 \\
+\end{bmatrix})
+ = 16
+$, $\;\;$
+$
+\texttt{sum\_of\_diagonal}(
+\begin{bmatrix}
+    1 & 5   \\
+    3 & 4  \\
+\end{bmatrix})
+ = 5
+$
+
+Tu función tiene que pasar los siguientes tests:
+
+\begin{small}
+\begin{python}
+@pytest.mark.parametrize("testcase, entrada, salida_esperada",[
+(1, [[1,2,3],[4,5,6],[7,8,9]], 15),
+(2, [[1,0,1],[1,1,0],[1,1,1]], 3),
+(3, [[2,0],[0,2]], 4)])
+
+def test_sum_of_diagonal(testcase, entrada, salida_esperada):
+    assert sum_of_diagonal(entrada) == salida_esperada,\
+           "caso {0}".format(testcase)
+\end{python}
+\end{small}
+
+
+\end{exercise}

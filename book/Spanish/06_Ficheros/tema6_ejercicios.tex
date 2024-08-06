@@ -1,0 +1,366 @@
+
+\section*{Ejercicios}\label{ejercicios}
+\addcontentsline{toc}{section}{Ejercicios}
+
+\begin{ejercicio}
+Escribe un programa que lea el fichero \texttt{mbox-short.txt} e imprima su
+contenido (línea por línea), todo en mayúsculas. Para testear el programa ejecútalo, y verifica que sale esto:\\
+
+\begin{Verbatim}[frame=single]
+>>> %Run 
+Ingresa un nombre de fichero: mbox-short.txt
+FROM STEPHEN.MARQUARD@UCT.AC.ZA SAT JAN  5 09:14:16 2008
+RETURN-PATH: <POSTMASTER@COLLAB.SAKAIPROJECT.ORG>
+RECEIVED: FROM MURDER (MAIL.UMICH.EDU [141.211.14.90])
+     BY FRANKENSTEIN.MAIL.UMICH.EDU (CYRUS V2.3.8) WITH LMTPA;
+     SAT, 05 JAN 2008 09:14:16 -0500
+\end{Verbatim}
+
+Puedes descargar el fichero \texttt{mbox-short.txt} desde Poliformat.
+\end{ejercicio}
+
+\begin{ejercicio}
+Escribe un programa que solicite un nombre de
+fichero y después lea ese fichero buscando las líneas que tengan la
+siguiente forma:\\
+
+\begin{Verbatim}[frame=single]
+X-DSPAM-Confidence: 0.8475
+\end{Verbatim}
+
+**Cuando encuentres una línea que comience con ``X-DSPAM-Confidence:''
+ponla aparte para extraer el número decimal de la línea. Cuenta esas
+líneas y después calcula el total acumulado de los valores de
+``spam-confidence''. Cuando llegues al final del fichero, imprime el
+valor medio de ``spam confidence''.\\
+
+\begin{Verbatim}[frame=single]
+>>> %Run
+Ingresa un nombre de fichero: mbox.txt
+Promedio spam confidence: 0.894128046745
+
+>>> %Run
+Ingresa un nombre de fichero: mbox-short.txt
+Promedio spam confidence: 0.750718518519
+\end{Verbatim}
+
+Prueba tu programa con los ficheros \texttt{mbox.txt} y
+\texttt{mbox-short.txt} que están en Poliformat.
+\end{ejercicio}
+
+
+\begin{ejercicio}
+Algunas veces cuando los programadores se aburren o
+quieren divertirse un poco, agregan un inofensivo \emph{Huevo de Pascua}
+a su programa. Modifica el programa que pregunta al usuario por el
+nombre de fichero para que imprima un mensaje divertido cuando el
+usuario escriba ``na na boo boo'' como nombre de fichero. El programa
+debería funcionar normalmente para cualquier fichero que exista o no
+exista. Aquí tres ejemplos para testear tu programa:\\
+
+\begin{Verbatim}[frame=single]
+>>> %Run 
+Ingresa un nombre de fichero: mbox.txt
+Hay 1797 líneas subject en mbox.txt
+
+>>> %Run 
+Ingresa un nombre de fichero: inexistente.tyxt
+El fichero no se puede abrir: inexistente.tyxt
+
+>>> %Run 
+Ingresa un nombre de fichero: na na boo boo
+NA NA BOO BOO PARA TI - Te he atrapado!
+\end{Verbatim}
+
+No te estamos aconsejando poner Huevos de Pascua en tus
+programas; es sólo un ejercicio.
+\end{ejercicio}
+
+
+
+\begin{ejercicio}
+Escribe un programa que lee el nombre de un fichero de texto del teclado y muestra por pantalla el texto codificado de forma que sólo las letras minúsculas se sustituyen por las siguientes.
+
+Por ejemplo, si el fichero es:\\
+
+\begin{Verbatim}[frame=single, label={\em message.txt}]
+This is a secret message
+\end{Verbatim}
+
+
+\begin{Verbatim}[frame=single]
+>>> %Run 
+Introduzca un nombre de fichero: message.txt
+Tijt jt b tfdsfu nfttbhf
+\end{Verbatim}
+
+Ejecuta tests de tu función creando diferentes ficheros de texto como entrada para tu programa y verifica que el resultado es la salida esperada.
+
+
+
+\end{ejercicio}
+
+
+\begin{ejercicio}
+Necesitamos anonimizar el fichero \texttt{interview.txt} en Poliformat. Este fichero contiene una entrevista con Bill, pero su nombre no puede aparecer y hay que cambiarlo a Pepito para anonimizar el fichero. Tu función tiene que devolver el nombre del fichero anonimizado.
+
+
+Escribe una función \pythoninline{anonimizar} en Python que puede anonimizar este fichero. La función recibe 3 parámetros, el nombre de un fichero y dos strings \texttt{s1} y \texttt{s2}. En todo el fichero hay que cambiar las ocurencias del \texttt{s1} por el \texttt{s2}.
+
+Puedes probar tu función manualmente usando el fichero 
+\texttt{interview.txt}\\
+
+\begin{Verbatim}[frame=single]
+>>> interview_file = "interview.txt"
+>>> new_file = anonimizar(interview_file, "Bill", "Pepito")
+>>> manej_new_file = open(new_file)
+>>> for l in manej_new_file:
+    print(l)
+    
+Pepito is a Syrian refugee. She arrived three days..
+........
+........
+\end{Verbatim}
+\end{ejercicio}
+
+
+\begin{ejercicio}
+Para testear el ejercicio anterior de forma automatico, vamos a escribir otra función
+\pythoninline{en_fichero} que toma como argumento un nombre de un fichero y un string y devuelve \pythoninline{True} si el string aparece en el fichero y \pythoninline{False} si no esta.
+
+La idea es testear que nuestra función \pythoninline{anonimizar} ha anonimizado bien el fichero, por ejemplo de esta manera:
+
+\begin{python}
+@pytest.mark.parametrize("testcase, in1, in2, in3",[
+(1, "interview.txt", "Bill", "Pepito")
+])              
+
+def test_anonimizar(testcase, in1, in2, in3):
+    assert not (en_fichero(anonimizar(in1, in2, in3),in2)),\
+           "caso {0}".format(testcase)
+\end{python}
+
+Crear 2 ficheros de texto más para anonimizar y añade 2 casos de test.
+
+\end{ejercicio}
+
+
+
+\begin{ejercicio} 
+Escribir una función que pida un número \pythoninline{n} entero entre 1 y 20 y guarde en un fichero con el nombre tabla-div-n.txt la tabla de división de ese número, done \pythoninline{n} es el número introducido. El formato del fichero tiene en cuanto la cantidad de dígitos de los números. Por ejemplo:\\
+
+\begin{tabular}{p{3cm}p{3cm}p{3cm}}
+
+\pythoninline{n} es 13:
+
+\begin{verbatim}
+ 13 : 13 =  1
+ 26 : 13 =  2
+ 39 : 13 =  3
+ 52 : 13 =  4
+ 65 : 13 =  5
+ 78 : 13 =  6
+ 91 : 13 =  7
+104 : 13 =  8
+117 : 13 =  9
+130 : 13 = 10
+\end{verbatim}
+&
+\pythoninline{n} es 3:
+
+\begin{verbatim}
+  3 :  3 =  1
+  6 :  3 =  2
+  9 :  3 =  3
+ 12 :  3 =  4
+ 15 :  3 =  5
+ 18 :  3 =  6
+ 21 :  3 =  7
+ 24 :  3 =  8
+ 27 :  3 =  9
+ 30 :  3 = 10
+\end{verbatim}
+
+& 
+\pythoninline{n} es 1:
+
+\begin{verbatim}
+  1 :  1 =  1
+  2 :  1 =  2
+  3 :  1 =  3
+  4 :  1 =  4
+  5 :  1 =  5
+  6 :  1 =  6
+  7 :  1 =  7
+  8 :  1 =  8
+  9 :  1 =  9
+ 10 :  1 = 10
+\end{verbatim}
+\end{tabular}
+
+Es decir, la cantidad de espacios puede ser máximo 8 en una linea (como en el caso del 1). 
+Prueba a mano tu función con algunos valores.
+
+
+\end{ejercicio}
+
+\begin{ejercicio}
+Para hacer un poco más facil el testing del ejercico anterior, y para no tener que estar abriendo y cerrando ficheros todo el tiempo, vamos a escribir una función 
+\pythoninline{print_tabla} que pida un número $n$ entero entre 1 y 10, lea el fichero tabla-div-n.txt generado con la tabla de división de ese número y la muestre por pantalla. Si el fichero no existe debe mostrar un mensaje por pantalla informando de ello.
+\end{ejercicio}
+
+
+\begin{ejercicio}
+Al final decidimos automatizar el testing de la función
+para hacer aun más fácil el testing del ejercicio anterior, y para no tener que estar abriendo y cerrando ficheros todo el tiempo. Vamos a escribir una función 
+\pythoninline{check_tabla} que pida un número $n$ entero entre 1 y 10, lea el fichero tabla-div-n.txt generado con la tabla de división de ese número y devuelve 
+\pythoninline{True} si el fichero es correcto y 
+\pythoninline{False} si no.
+Si el fichero no existe debe mostrar un mensaje por pantalla informando de ello.
+
+
+\begin{python}
+@pytest.mark.parametrize("testcase, entrada",[
+(1, 3),
+(2, 5),
+(4, 9),
+(10, 11)
+])              
+
+def test_tabla_division(testcase, entrada):
+    tabla_division(entrada)
+    assert check_tabla(entrada),"caso {0}".format(testcase)
+\end{python}
+\end{ejercicio}
+
+\begin{ejercicio}
+\label{generate_ficheros}
+Escribe una funcion \pythoninline{generar_ficheros} en Python que puede generar una cantidad de ficheros con una cantidad aleatoria (entre 2 y 20) de números reales aleatorios (entre 1.00 y 300.00). Los números tienen que estar alineados a la derecha y con 3 decimales. 
+
+%Puedes importar \pythoninline{random} y usar \pythoninline{randint} para generar números enteros de forma aleatorio, y \pythoninline{uniform} para generar números reales de forma aleatorio.
+
+Tu función recibe 2 parámetros: 
+
+\begin{itemize}
+    \item la cantidad de ficheros que quiere generar
+    \item el nombre que quiere usar como base de los ficheros generados. Por ejemplo, la cantidad a generar es 4 ficheros con nombre de base\texttt{fichero}, tu función generará los ficheros \texttt{fichero1.txt}, \texttt{fichero2.txt}, \dots, \texttt{fichero4.txt}
+\end{itemize}
+
+Por ejemplo:\\
+
+\begin{Verbatim}[frame=single, label={\em ejemplo de sesión interactiva}]
+>>> generar_ficheros(4, "fichero")
+>>> 
+\end{Verbatim}
+
+Puede generar por ejemplo:\\
+
+\begin{tabular}{p{3cm}p{3cm}p{3cm}p{3cm}}
+
+\begin{Verbatim}[frame=single, label={\em fichero1.txt}]
+ 133.252 
+ 159.931 
+ 162.024 
+  23.260 
+ 147.501 
+\end{Verbatim}
+&
+\begin{Verbatim}[frame=single, label={\em fichero2.txt}]
+  29.921 
+ 199.442 
+ 158.016 
+\end{Verbatim}
+&
+\begin{Verbatim}[frame=single, label={\em fichero3.txt}]
+  50.082 
+  59.349
+ 109.880
+ 153.481
+ 195.162
+  51.953
+  86.554
+ 153.281
+\end{Verbatim}
+&
+\begin{Verbatim}[frame=single, label={\em fichero4.txt}]
+   6.640
+ 136.339
+  32.027
+  56.166
+  97.675
+ 160.564
+\end{Verbatim}
+\end{tabular}
+
+\end{ejercicio}
+
+\begin{ejercicio}
+Escribe una función \pythoninline{fichero2list} que recibe 
+ el nombre de un fichero y que lea una cantidad de números reales de este fichero, almacenándolos en una lista. Tu función tiene que devolver la lista. \\
+
+
+\begin{Verbatim}[frame=single, label={\em ejemplo de sesión interactiva}]
+>>> fichero2list("fichero2.txt")
+[29.921 , 199.442 , 158.016]
+
+>>>fichero2list("fichero4.txt")
+>>>[6.640, 136.339, 32.027, 56.166, 97.675, 160.564]
+\end{Verbatim}
+
+\end{ejercicio}
+
+\begin{ejercicio}
+Escribe una función \pythoninline{calcular\_formula} en Python que recibe el nombre de un fichero y que lea una cantidad ($N$) de números reales de este fichero, almacenándolos
+en una lista $l$, y que muestre por pantalla el valor de aplicar una formula a dichos datos. 
+
+El valor de la formula se calcula como la suma de las diferencias al cuadrado entre cada elemento de la lista, $l[i]$, y la \emph{media}, todo ello dividido entre el número de elementos ($N$):
+\begin{equation}
+  formula = \frac{\sum_{i=1}^{N} (x[i]-media)^{2}}{N-1}
+\end{equation}
+
+%La media de una lista podemos obtener usando sum()/len().
+
+Por ejemplo, imagina que tenemos:\\
+
+\begin{Verbatim}[frame=single, label={\em numeros.txt}]
+   6.64 
+ 136.33 
+  32.02 
+  56.16 
+  97.67 
+ 160.56 
+\end{Verbatim}
+
+$\;$\\
+
+
+\begin{Verbatim}[frame=single, label={\em ejemplo de llamada a la función}]
+>>> calcular_formula("numeros.txt")
+ 3642.5325866666667
+\end{Verbatim}
+
+Para testear tu solución puedes usar el siguiente pytest:
+
+\begin{python}
+import pytest
+import statistics
+
+@pytest.mark.parametrize("testcase, f_entrada",[
+(1,  "numeros1.txt"),
+(2,  "numeros2.txt"),
+(3,  "numeros3.txt"),
+(4,  "numeros4.txt"),
+])
+
+def test_tu_funcion(testcase, f_entrada):
+    generar_ficheros(4, "numeros")
+    tu_formula = calcular_formula(f_entrada)
+    formula = statistics.variance(fichero2lista(f_entrada))
+    assert abs(tu_formula - formula) < 10**-7 ,\
+           "caso {0} ha fallado".format(testcase)
+\end{python}
+
+
+
+
+\end{ejercicio}

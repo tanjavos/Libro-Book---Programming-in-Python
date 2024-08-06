@@ -1,0 +1,294 @@
+\section*{Exercises}\label{ejercicios}
+\addcontentsline{toc}{section}{Exercises}
+
+\begin{exercise}
+What is the use of the ``def'' keyword in Python?\\
+a) It is a slang meaning ``this code is really cool''\\
+b) Indicates the start of a function\\
+c) Indicates that the following section of indented code should be stored for later use\\
+d) b and c are both correct\\
+e) None of the above
+\end{exercise}
+
+\begin{exercise}
+What will the following Python program display on the screen?
+python?
+
+\begin{Verbatim}[frame=single]
+def fred():
+   print("Zap")
+
+def jane():
+   print("ABC")
+
+jane()
+fred()
+jane()
+\end{Verbatim}
+a) Zap ABC jane fred jane\\
+b) Zap ABC Zap\\
+c) ABC Zap jane\\
+d) ABC Zap ABC\\
+e) Zap Zap Zap
+\end{exercise}
+
+\begin{exercise}
+Tell what the following program shows on the screen:
+\begin{Verbatim}[frame=single]
+   a = 4
+   def func (x):
+        a=a+x
+        return a
+
+   for cont in range(1,6):
+        a=func(cont)
+        print(a)
+\end{Verbatim}
+\end{exercise}
+\begin{exercise}
+Tell what the following program shows on the screen:
+\begin{Verbatim}[frame=single]
+   a = 0
+   b = 1
+
+   def func1 (a):
+	b= func2(a+1)+1
+	return b
+
+   def func2 (a):
+	return (b+a)
+
+   for cont in range(1,6):
+	b= b + func1 (a+1) + 1
+        print(b)
+\end{Verbatim}
+\end{exercise}
+
+\begin{exercise}
+Write a function (\pythoninline{change_string}) in python that, given a string \pythoninline{str}, returns another string in which the first and last characters of \pythoninline{str} have been swapped.
+
+As it is one of the first exercises where you have to write a function, we have created a template (\pythoninline{change_string-TEMPLATE.py}) in Poliformat where you can copy the code of your solution and run the tests.
+
+\begin{small}
+\begin{python}
+import pytest
+
+def change_string(cad):
+      <tu codigo aqui>
+	  
+@pytest.mark.parametrize("testcase, test_input, expected_output",[
+(1, "", ""),               #Cardinality = 0
+(2, "z", "z"),             #Cardinality = 1
+(3, "tanja", "aanjt"),     #Cardinality > 1
+(4, "abbbba", "abbbba"),   #Ordee
+(4, "12345", "52341"),     #Domain
+(5, "!@ih&/", "/@ih&!")    #Each structure
+])
+
+def test_change_string(testcase, test_input, expected_output):
+    assert change_string(test_input) == expected_output, "case {0}".format(testcase)
+\end{python}
+\end{small}
+
+Write your solution and run the tests by executing in Thonny's shell \texttt{!py.test change\_string.py} (assuming the exercise is in the \texttt{change\_string.py} file).
+It should output something like:
+
+\begin{verbatim}
+>>> !py.test change_string.py
+============================= test session starts ==============================
+platform darwin -- Python 3.7.9, pytest-6.1.2, py-1.9.0, pluggy-0.13.1
+rootdir: /Users/tanjavos/Unit5/exercises/
+collected 3 items
+
+change_string.py ...                                                     [100%]
+
+============================== 3 passed in 0.01s ===============================
+\end{verbatim}
+
+NOTE: don't forget to import pytest like this:
+\pythoninline{import pytest}. If you don't import it, the Python interpreter can't find it and will tell you: \texttt{NameError: name 'pytest' is not defined}.
+
+
+\end{exercise}
+
+
+\begin{exercise}
+Write a program containing a function \pythoninline{my\_pow} that computes $X^{n}$, where $X$ is a real number and $n$ is a positive integer. You have to write the program \textit{without} using the pythoninline{Math.pow} library function. You can use this predefined function in pytests to check the output of your function, for example like this:
+
+\begin{python}
+import math
+@pytest.mark.parametrize("testcase, input1, input2, output",[
+    (1, 2, 0, math.pow(2,0)),      #Cardinality n = 0
+    (2, 0, 0, math.pow(0,0)),      #Domain/Cardinality X = 0 y n = 0
+    (3, 0, 3, math.pow(0,3)),      #Domain/Cardinality X = 0, n > 1
+    (4, 5, 10, math.pow(5,10)),    #Domain/Cardinality X > 1, n > 1
+    (5, -5, 6, math.pow(-5,6)),    #Domain/Cardinality X < 0, n > 1
+])
+
+def test_my_pow(testcase, input1, input2, output):
+    assert my_pow(input1, input2) == output , "case {0}".format(testcase)
+\end{python}
+\end{exercise}
+
+
+\begin{exercise}
+Write a function (\pythoninline{odd_values_string}) in python that, given a string $s$, returns another string in which characters at odd index positions have been removed. Your function has to pass the following tests:
+
+\begin{small}
+\begin{python}
+@pytest.mark.parametrize("testcase, test_input, expected_output",[
+(1, "", ""),                #Cardinality = 0
+(2, "a", "a"),              #Cardinality = 1 (0 letters in odd position)
+(3, "aa", "a"),             #Cardinality = 2 (1 letter in odd position)
+(4, "abcd", "ac"),          #Cardinality = 4 (2 letters in odd position, 4 letters)
+(5, "abcde", "ace"),        #Cardinality = 5 (2 letters in odd position, 5 letters)
+(6, "12345", "135"),                    #Domain, string with digits
+(7, "&%$(agt.34", "&$at3"),             #Structure, string with marks
+(8, "hi spaces  ", "h pcs ")            #Structure, string with spaces
+])
+
+def test_odd_values_string(testcase, test_input, expected_output):
+    assert odd_values_string(test_input) == expected_output,\
+           "case {0}".format(testcase)
+\end{python}
+\end{small}
+
+\end{exercise}
+
+\begin{exercise}
+Write a function \pythoninline{my_root} that calculates the square root of a number $n$, applying the Babylonian method. This method consists of calculating the sequence $S$:
+\begin{center}
+$S = \lbrace s_{i} \rbrace ^{\infty}_{i=0}= s_{0} , s_{1} , s_{2} , \dots , s_{\infty}$ where $: s_{0} = 2 $    y   $ s_{i+1} = \frac {s_{i} + n/s_{i}}{2}$
+\end{center}
+Each of the terms $s_{i}$ of the series is an approximation to $\sqrt{n}$. Obviously, the last of the calculated terms will be the best approximation. A new term $s_{i+1}$ will be calculated as long as $|s_{i-1} - s_{i} | > 10^{-8}$ .
+
+
+You can use \pythoninline{math.sqrt} as the expected result in your test cases. However, keep in mind that comparing floats for equality is a bit tricky due to rounding and precision issues.
+We can compare that the difference between what comes out of our function and the \pythoninline{math.sqrt} is less than for example $10^{-7}$
+
+\begin{small}
+\begin{python}
+def test_my_exp(testcase, test_input):
+   assert abs(my_root(test_input) - math.sqrt(test_input))<10**-7, 
+          "case {0}".format(testcase)
+\end{python}
+\end{small}
+\end{exercise}
+
+
+
+\begin{exercise}
+Write a function \pythoninline{my\_cosine} that, given a real value $x > 0$, calculates the cosine of $x$ using the following series:
+$$cos(x)=\sum_{i=0}^{\infty}(-1)^{i}\frac{x^{2i}}{(2i)!}= 1 - \frac{x^{2}}{2!} + \frac{x^{4}}{4!} - \dots$$
+Terms of the series must be calculated while the absolute value of each term is greater than $10^{-7}$.
+
+NOTE: If we want to calculate the cosine of 45 degrees using our \pythoninline{my\_cosine} function, we first have to convert 45 degrees to radians. Fortunately, Python's math module has a function called \pythoninline{math.radians()} that does the angle conversion first.
+
+Here you can use \pythoninline{math.cos} as the expected result in your test cases. Again note that comparing floats for equality is tricky due to rounding and precision issues.
+\end{exercise}
+
+\begin{exercise}
+Write a function that, given a real value $x > 0$, calculates the arc-tangent of $x$ using the following series:
+$$arctan(x) = \sum_{n=0}^{\infty}(-1)^{i}\frac{x^{2n+1}}{2n+1}= x - \frac{1}{3}x^{3}+\frac{1}{5}x^{5}-\frac{1}{7}x^{7}+\dots$$
+Terms of the series must be calculated while the absolute value of each term is greater than $10^{-7}$.
+
+Remember to use \pythoninline{math.radians()}. You can use \pythoninline{math.atan} as the expected result in your pytest cases.
+\end{exercise}
+
+
+
+\begin{exercise}
+\index{objeto!de función}
+\index{función!objeto de}
+
+A function object is a value that you can assign to a variable or pass as an argument. For example, \verb"do_2times" is a function that takes a function object as an argument and calls it twice:
+
+\begin{python}
+def do_2times(f):
+    f()
+    f()
+\end{python}
+
+Here is an example that uses \pythoninline{do_2times} to call a function named \pythoninline{print_spam} twice.
+
+\begin{python}
+def print_spam():
+    print('spam')
+
+do_2times(print_spam)
+\end{python}
+
+\begin{enumerate}
+
+\item Write this example in a script and try it.
+
+\item Modify \pythoninline{do_2times} so that it takes two arguments, a
+function object and a value, and call the function twice,
+passing the value as an argument.
+
+\item Remember and copy the definition of
+\pythoninline{show_twice}, introduced earlier in this unit, to your script.
+
+\begin{python}[frame=single]
+def show_twice(bruce):
+    print(bruce)
+    print(bruce)
+\end{python}
+
+
+\item Use the modified version of \pythoninline{do_2times} to call \pythoninline{show_twice} twice, passing \pythoninline{'spam'} as an argument.
+
+\item Defines a new function called \pythoninline{do_4times} that takes a function object and a value and calls the function four times, passing the value as an argument. There should be only two statements in the body of this function, not four.
+
+\end{enumerate}
+
+%Solution: \url{http://thinkpython2.com/code/do_four.py}.
+
+\end{exercise}
+
+
+\begin{exercise}
+
+Note: This exercise should be done using only the functions from the previous exercise. Try to see the pattern to repeat.
+
+\begin{enumerate}
+\item Write a function that draws a grid like the following:
+\index{cuadrícula}
+
+\begin{Verbatim}
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+\end{Verbatim}
+%
+Hint: to print more than one value on a line, you can print a sequence of values separated by commas:
+
+\begin{Verbatim}
+print('+', '-')
+\end{Verbatim}
+%
+By default, \pythoninline{print} advances to the next line, but you can override that behavior and put a trailing space, like this:
+
+\begin{Verbatim}
+print('+', end=' ')
+print('-')
+\end{Verbatim}
+%
+The output of these statements is \verb"'+ -'" on the same line. The output from the following \pythoninline{print} statement should start on the next line.
+
+
+\item Write another function that draws a similar grid with four rows and four columns.
+\end{enumerate}
+
+%Solución: \url{http://thinkpython2.com/code/grid.py}.
+Credit: This exercise is based on an exercise by Oualline, {\em Practical C Programming, Third Edition}, O'Reilly Media, 1997.
+
+\end{exercise}

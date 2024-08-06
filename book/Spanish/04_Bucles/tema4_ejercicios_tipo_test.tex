@@ -1,0 +1,495 @@
+
+\section*{Ejercicios de tipo test}
+\addcontentsline{toc}{section}{Ejercicios de tipo test}
+
+
+
+\begin{ejercicio}Imagine que definimos la siguiente cadena en Python:
+
+\begin{python}
+str = "abcdef"
+\end{python}
+
+¿Qué sale cuando tecleamos?
+\begin{python}
+for i in range(0, len(str), -1):
+        print(str[i])
+\end{python}
+
+\begin{choices}
+\choice 
+\begin{verbatim}
+a
+b
+c
+d
+e
+\end{verbatim}
+\choice
+\begin{verbatim}
+abcde
+\end{verbatim}
+\choice %CORRECT
+\begin{verbatim}
+
+\end{verbatim}
+\choice
+\begin{verbatim}
+fedcba
+\end{verbatim}
+\end{choices}
+
+
+
+\end{ejercicio} 
+
+\begin{ejercicio}Imagine que definimos la siguiente cadena en Python:
+
+\begin{python}
+str = "abcdef"
+\end{python}
+
+¿Qué sale cuando tecleamos?
+
+
+\begin{python}
+for i in range(-4, 2, 1):
+        print(str[i])
+\end{python}
+
+\begin{choices}
+    \choice %CORRECT
+\begin{verbatim}
+c
+d
+e
+f
+a
+b
+\end{verbatim}
+    \choice
+\begin{verbatim}
+d
+c
+b
+a
+\end{verbatim}
+    \choice 
+\begin{verbatim}
+
+\end{verbatim}
+    \choice
+\begin{verbatim}
+c
+d
+e
+f
+\end{verbatim}
+\end{choices}
+
+%\solucion{A.}
+
+
+\end{ejercicio}  
+
+\begin{ejercicio}¿Qué sale cuando ejecutamos el siguiente código?
+
+\begin{python}
+i = 0
+sum = 0
+while i <= 4:
+    sum += i
+    i = i+1
+print(sum)
+\end{python}
+
+\begin{choices}
+    \choice 10 %CORRECT
+    \choice 4
+    \choice 5
+    \choice 0
+\end{choices}
+
+%\solucion{10}
+
+
+
+\end{ejercicio}  
+
+\begin{ejercicio}Imagine las siguientes instrucciones en Python:
+
+
+\begin{python}
+n = 5
+while n > 0:
+    if n == 2:
+        break
+    n = n - 1
+    print(n)
+print('Loop ended.')
+\end{python}
+
+¿Cual es el resultado?
+
+\begin{choices}
+    \choice %CORRECT 
+\pythoninline{4}\\
+\pythoninline{3}\\
+\pythoninline{2}\\
+\pythoninline{Loop ended.}
+    \choice 
+\pythoninline{4}\\
+\pythoninline{3}\\
+\pythoninline{2}\\
+\pythoninline{1}\\
+\pythoninline{Loop ended.}
+    \choice Es un bucle infinito
+    \choice \pythoninline{NameError: name 'break' is not defined}
+\end{choices}
+
+\end{ejercicio}  
+
+\newpage
+
+\begin{ejercicio}Imagine las siguientes instrucciones en Python:
+
+
+\begin{python}
+k = 5
+i = -4
+while (i <= k):
+    i = i + 2
+    k = k - 2
+    print (i+k)
+\end{python}
+
+¿Cual es el resultado?
+
+\begin{choices}
+    \choice %CORRECT  
+\pythoninline{1}\\
+\pythoninline{1}\\
+\pythoninline{1}
+    \choice 
+\pythoninline{2}\\
+\pythoninline{3}\\
+\pythoninline{4}\\
+\pythoninline{5}\\
+    \choice 
+\pythoninline{3}\\
+\pythoninline{3}\\
+\pythoninline{3}
+    \choice Es un bucle infinito
+
+\end{choices}
+
+
+
+\end{ejercicio} 
+
+\begin{ejercicio}¿Qué estructuras de control iterativas tiene Python? 
+
+\begin{choices}
+    \choice while %choice
+    \choice if
+    \choice elif
+    \choice try
+\end{choices}
+
+
+\end{ejercicio} 
+
+\begin{ejercicio}Imagine el siguiente programa Python:
+
+\begin{python}
+acu = int(input("Introduce el valor: "))
+cont = int(input("Introduce otro valor: "))
+prod = 0
+vec = 0
+while vec > 0: 
+    prod = prod + m
+    vec += 1 
+print(f"El prod es igual a {prod}")
+\end{python}
+
+¿Qué opción es correcta?
+
+
+
+\begin{choices}
+    \choice prod es una acumuladora y vec una contadora %choice
+    \choice vec es una acumuladora y prod una contadora
+    \choice acu es una acumuladora y vec una contadora
+    \choice acu es una acumuladora y cont una contadora
+\end{choices}
+\end{ejercicio}  
+
+
+
+%%%%%%bucle
+\begin{ejercicio} ¿Cuál será el output del siguiente código de Python?
+\begin{python}
+i = 4
+while (i <= 6):
+    if i%5 == 0:
+        continue
+    print(i)
+    i += 1
+else:
+    print("bye")
+\end{python}
+
+\begin{choices}
+    \choice  Es un bucle infinito   %CORRECT
+    \choice   \pythoninline{6 7 bye}
+    \choice  \pythoninline{6 bye}
+    \choice   \pythoninline{5 6 bye}
+\end{choices}
+
+\end{ejercicio}
+
+
+\begin{ejercicio} ¿Qué imprime por pantalla el siguiente programa?
+
+\begin{python}
+x = "abcdef"
+i = "i"
+while i in x:
+    print(i)
+\end{python}
+
+\begin{choices}
+    \choice no hay resultado   %CORRECT
+    \choice \pythoninline{iiiiii}
+    \choice \pythoninline{abcdef}
+    \choice TypeError
+\end{choices}
+\end{ejercicio}
+
+
+
+\begin{ejercicio} ¿Qué imprime por pantalla el siguiente programa?
+
+\begin{python}
+for i in "22":
+    for j in "33":
+        print(1*i + 2*j, end=" ")
+\end{python}
+
+
+\begin{choices}
+    \choice 
+\pythoninline{8 8 8 8}
+
+\choice 
+\pythoninline{88}
+
+\choice    %CORRECT
+\pythoninline{233 233 233 233}
+\choice Un error
+\end{choices}
+\end{ejercicio}
+
+\begin{ejercicio} ¿Cuál de las siguientes es una instrucción de repetición en Python? 
+
+\begin{choices}
+    \choice for   %CORRECT
+    \choice if
+    \choice elif
+    \choice try
+\end{choices}
+
+\end{ejercicio}
+
+
+\begin{ejercicio} ¿Qué imprime por pantalla el siguiente código?
+
+\begin{python}
+v1 = 6
+v2 = 6
+while (v1 * v2 >= 0):
+    print (v1 * v2)
+    v1 = v1 - 3
+    v2 = v2 + 3
+ \end{python}
+
+\begin{choices}
+    \choice 
+\pythoninline{27}\\
+\pythoninline{0}\\
+\pythoninline{-36}
+
+\choice 
+\pythoninline{36}\\
+\pythoninline{27}
+
+\choice     %CORRECT
+\pythoninline{36}\\
+\pythoninline{27}\\
+\pythoninline{0}
+
+\choice Es un bucle infinito
+
+\end{choices}
+
+\end{ejercicio}
+
+\begin{ejercicio} 
+¿Qué imprime por pantalla el siguiente programa?
+
+\begin{python}
+c = 3
+while (c - 1) > 0:
+    if c == 2:
+       print(c)
+       break
+    print(c)
+    c = c - 1
+print('Loop ended.')
+\end{python}
+
+\begin{choices}
+    \choice    %CORRECT
+\pythoninline{3}\\
+\pythoninline{2}\\
+\pythoninline{Loop ended.}
+    \choice 
+\pythoninline{2}\\
+\pythoninline{1}\\
+\pythoninline{Loop ended.}
+
+    
+    \choice 
+    \pythoninline{3}\\
+\pythoninline{2}\\
+\pythoninline{2}\\
+\pythoninline{Loop ended.}
+     
+    \choice NameError: name 'break'  is not defined
+\end{choices}
+\end{ejercicio}
+
+\newpage
+
+
+\begin{ejercicio} 
+¿Qué imprime por pantalla el siguiente programa?
+
+\begin{python}
+mensaje = "Guido van Rossum"
+for i in range(2, -2, -3):
+        print(mensaje[i])
+print("Inventor de Python")
+\end{python}
+
+\begin{choices}
+    \choice    %CORRECT
+\pythoninline{i}\\
+\pythoninline{m}\\
+\pythoninline{Inventor de Python}
+    \choice
+\pythoninline{u}\\
+\pythoninline{o}\\
+\pythoninline{n}\\
+\pythoninline{}\\
+\pythoninline{Inventor de Python}
+    \choice 
+\pythoninline{Inventor de Python}
+    \choice
+\pythoninline{u}\\
+\pythoninline{o}\\
+\pythoninline{n}\\
+\pythoninline{Inventor de Python}
+\end{choices}
+
+
+\end{ejercicio}
+
+
+\begin{ejercicio} ¿Qué imprime por pantalla el siguiente código?
+
+\begin{python}
+n = 2
+
+for i in range(n+1):
+    for j in range (i, n, 4):
+        print('A', end=".")
+        for k in range (j, n, 3):
+            print('B', end=",")
+            for l in range (k, n - i - j - k):
+                print('C', end="-")
+\end{python}
+
+\begin{choices}
+    \choice 
+\pythoninline{A.B,C-C-C-C-A.B,}
+    \choice    %CORRECT
+\pythoninline{A.B,C-C-A.B,}
+    \choice 
+\pythoninline{A.B,C-C-A.B}
+    \choice 
+\pythoninline{A.B,C-C-A.A.B,A.A.A.}
+\end{choices}
+
+
+\end{ejercicio}
+
+\newpage
+
+\begin{ejercicio} ¿Qué imprime por pantalla el siguiente programa?
+ \begin{python}
+for i in range(1,10):
+    if i == 2:
+        break
+    elif i == 10:
+        print("here")
+    else:
+        print(i)
+\end{python}
+
+\begin{choices}
+    \choice 1 3 4 5 6 7 8 9 here
+    \choice 1   %CORRECT
+    \choice 1 3 4 5 6 7 8 9
+    \choice 1 here
+\end{choices}
+
+\end{ejercicio}
+
+
+\begin{ejercicio} ¿Qué imprime por pantalla el siguiente programa?
+
+\begin{python}
+t = "supercalifragilisticexpialidocious"
+for i in range(0, len(t), 8):
+	print(t[i], end="")
+\end{python}
+
+\begin{choices}
+    \choice \pythoninline{sisau}   %CORRECT
+    \choice \pythoninline{TypeError}
+    \choice \pythoninline{isau}
+    \choice \pythoninline{supercal}
+\end{choices}
+
+\end{ejercicio}
+
+\begin{ejercicio} ¿Cuál será el output del siguiente código de Python?
+
+\begin{python}
+True = False
+while(True):
+    print("hi", end =" , ")
+    break
+print("Fin")
+\end{python}
+
+\begin{choices}
+    \choice An error   %CORRECT
+    \choice  \pythoninline{hi}
+    \choice  \pythoninline{Fin}
+    \choice  \pythoninline{hi , Fin}
+\end{choices}
+
+\end{ejercicio}
+

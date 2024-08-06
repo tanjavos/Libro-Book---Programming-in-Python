@@ -1,0 +1,414 @@
+\section{Un proyecto pequeño: adivinar numeros}
+
+Vamos a escribir un juego de {\em Adivina el número} que tenga tres niveles de dificultad. 
+
+\begin{enumerate}
+\item El primer nivel de dificultad sería un número entre 1 y 10. 
+\item El segundo conjunto de dificultad estaría entre 1 y 100. 
+\item El tercer conjunto de dificultad estaría entre 1 y 1000.
+\end{enumerate}
+
+El juego tiene que pedir al usuario el nivel de dificultad y luego iniciar el juego. Si el usuario entra un nivel que no existe, hay que informarle y volver a pedir el nivel de dificultad:\\
+
+\begin{Verbatim}[frame=single, label={\em example test execution of the program}]
+>>> %Run 
+  ¡Vamos a jugar!
+  Elige el nivel de dificultad (1/2/3): 5
+  ¡Introduce un nivel que existe: 1, 2 o 3!
+  Elige el nivel de dificultad (1/2/3): 
+\end{Verbatim}
+    
+Una vez recibido un nivel de dificultad adecuado, el juego elige un número aleatorio dentro del rango asociado al nivel de dificultad. Para generar números de forma aleatorio se puede usar la librería \pythoninline{random} y usar \pythoninline{random.randint()}. Por ejemplo:
+
+\begin{verbatim}
+import random
+print(random.randint(1, 20))
+\end{verbatim}
+
+Imprime un numero aleatorio entre 1 y 20.
+
+Una vez generado el numero, el programa pide al jugador que adivine ese número. Cada vez que el jugador adivina, tu programa debe darle al jugador una pista sobre si el número es demasiado alto o demasiado bajo. Tu programa también debe realizar un seguimiento del número de conjeturas. Una vez que el jugador adivina el número correcto, tu programa debe presentar el número de conjeturas y preguntar si al jugador le gustaría volver a jugar.\\
+
+\begin{Verbatim}[frame=single, label={\em example test execution of the program}]
+>>> %Run 
+  ¡Vamos a jugar!
+  Elige el nivel de dificultad (1/2/3): 1
+  Adivina un numero de 1 hasta 10: 5
+  Tu numero es demasiado alto
+  Intentalo otra vez!
+  Adivina un numero de 1 hasta 10: 2
+  Tu numero es demasiado bajo
+  Intentalo otra vez!
+  Adivina un numero de 1 hasta 10: 3
+  Tu numero es demasiado bajo
+  Intentalo otra vez!
+  Adivina un numero de 1 hasta 10: 4
+  ¡¡Lo has adivinado!!
+  Con un total de 4 conjeturas.
+  ¿Quieres volver a jugar? (s/n): 
+\end{Verbatim}
+
+
+Vamos a escribir un programa modular. La modularidad en un programa de Python implica dividir el código en funciones que solamente hacen una tarea y nada más. Estas funciones son más fáciles de testear y entonces aumentan la calidad del código. Además, 
+dividir tu código en funciones pequeñas y autónomas mejora la organización, claridad y mantenibilidad del programa. Esta práctica es esencial para escribir programas más eficientes, legibles y escalables.
+
+Empezamos a pensar en el bucle principal del juego porque es la columna vertebral de la lógica del juego. Su propósito es gestionar el flujo del juego, asegurándose de que todas las partes del proceso de jugar, verificar y reiniciar el juego se ejecuten en el orden correcto y de manera repetitiva hasta que el jugador decida parar.
+
+El diseño modular se basa en la separación de responsabilidades en funciones distintas y bien definidas. Esto permite un código más limpio, más fácil de mantener y de entender. En el contexto de este juego, la estructura modular implica dividir el juego en componentes independientes que realizan tareas específicas.
+
+Implementamos este bucle en una función \pythoninline{main()} que inicia el juego con un mensaje inicial y después controla el juego.
+
+El juego termina cuando el usuario ya no quiere seguir jugando. Por eso, introducimos una variable booleana llamada \pythoninline{play}, que actúa como una bandera y determina cuándo debe finalizar el bucle principal del juego. Esta variable se inicializa como \pythoninline{True} para comenzar el juego y se actualiza según la decisión del usuario al final de cada partida. Si el usuario decide continuar, play permanece \pythoninline{True}; de lo contrario, se establece en \pythoninline{False}, lo que hace que el bucle termine y el juego finalice.
+
+\begin{python}
+def main():
+    print('¡Vamos a jugar!')
+    play = True
+    
+    while(play):
+        #lógica del juego
+
+        v=input('¿Quieres volver a jugar? (s/n): ')
+        play = (v == "s")
+\end{python}
+
+
+El primer paso en la lógica del juego es pedir al jugador que seleccione un nivel de dificultad. Este nivel determinará el rango del número a adivinar. Para esto, implementaremos una función \pythoninline{pedir_nivel()}, que solicita al jugador un número que representará el límite superior del rango de números posibles.
+
+\begin{python}
+m = pedir_nivel()
+\end{python}
+
+Una vez seleccionado el nivel de dificultad, el juego genera un número aleatorio dentro del rango de \pythoninline{1} a \pythoninline{m} utilizando por ejemplo la función \pythoninline{random.randint(1, m)}. Este número es el objetivo que el jugador debe adivinar.
+
+\begin{python}
+num_a_adivinar = random.randint(1, m)    
+\end{python}
+
+Ahora empiezan las advinanzas. Se inicializan las variables necesarias para controlar el progreso del juego. Por ejemplo \pythoninline{num_de_conjeturas} se establece en 0 para contar los intentos del jugador, y \pythoninline{conjetura} se inicializa en \pythoninline{None} para empezar el proceso de adivinanza.
+
+\begin{python}
+num_de_conjeturas = 0
+conjetura = None
+\end{python}
+
+El juego entra en un bucle donde el jugador sigue haciendo conjeturas hasta adivinar el número correcto.
+Dentro del bucle, se le pide al jugador que haga una conjetura mediante una función que implementaremos después \pythoninline{ask_conjetura(m)}, la cual verifica que la conjetura esté dentro del rango válido.
+Cada conjetura incrementa el contador de intentos (\pythoninline{num_de_conjeturas += 1}).
+
+Implementaremos una función \pythoninline{check_conjetura(conjetura, num_a_adivinar, num_de_conjeturas)} para verificar si la conjetura es correcta, demasiado alta o demasiado baja, y proporciona retroalimentación al jugador.
+python
+
+\begin{python}
+while(conjetura != num_a_adivinar):
+    conjetura = ask_conjetura(m)
+    num_de_conjeturas += 1
+    check_conjetura(conjetura, num_a_adivinar, num_de_conjeturas)
+\end{python}
+
+En resumen el \pythoninline{main()} se quedará así:
+
+\begin{python}
+def main():
+    print('¡Vamos a jugar!')
+    play = True
+    
+    while(play):
+        m = pedir_nivel() 
+        num_a_adivinar = random.randint(1, m)
+        num_de_conjeturas = 0
+        conjetura = None
+
+        while(conjetura != num_a_adivinar):
+            conjetura = ask_conjetura(m)
+            num_de_conjeturas += 1
+            check_conjetura(conjetura, num_a_adivinar, num_de_conjeturas)
+            
+        v=input('¿Quieres volver a jugar? (s/n): ')
+        play = (v == "s")
+\end{python}
+
+
+Vemos que el código se organiza en varias funciones, cada una con una responsabilidad específica. Ahora primero tenemos que implementar estas funciones que:
+
+\begin{itemize}
+\item \pythoninline{pedir_nivel}: Se llama al inicio de cada partida para determinar la dificultad.
+\item \pythoninline{ask_conjetura}: Se llama repetidamente dentro del bucle de conjeturas para obtener las entradas del jugador.
+\item \pythoninline{check_conjetura}: Se llama después de cada conjetura para verificar la respuesta y proporcionar retroalimentación.
+\end{itemize}
+
+Empezamos con \pythoninline{pedir_nivel}, que tiene como objetivo solicitar al jugador que elija un nivel de dificultad para el juego. Dependiendo del nivel seleccionado, la función devuelve un rango específico que determinará la dificultad del juego. Si el usuario ingresa un valor no válido, se muestra un mensaje de error y se vuelve a pedir la entrada del usuario. Una posible implementación esta abajo
+
+\begin{python}
+def pedir_nivel():
+    while(True):
+        d = input('Elige el nivel de dificultad (1/2/3): ')
+        if not ((d=='1') or (d=='2') or (d=='3')):
+            print('¡Introduce un nivel que existe: 1, 2 o 3!')
+        elif (d=='1'):
+            return 10
+        elif (d=='2'):
+            return 100
+        elif (d=='3'):
+            return 1000
+\end{python}
+
+Una vez implementado nuestra función, lo testeamos automáticamente con pytests, cubriendo los 3 posibles salidas y algunas inputs invalidas.
+
+\begin{python}
+def test_pedir_nivel(monkeypatch, capsys): 
+    ############
+    ######CASO 1
+    inputs = ['4', '-1', 'z', 'dfg', '1'] 
+    
+    # Mock the user input. En lugar de hacer lo que hace el built-in
+    # input normalmente, ahora coge in valor de la lista inputs
+    monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+    
+    #call the function
+    result = pedir_nivel()
+    
+    #get the output
+    captured = capsys.readouterr()
+    
+    #check the outcomes
+    #final 1 should return level 10
+    assert result == 10
+    #there are 4 incorrect intents
+    assert captured.out.strip().count("nivel") == 4
+
+    ############
+    ######CASO 2
+    inputs = ['9', '-1', 'z', '2'] 
+    
+    # Mock the user input. En lugar de hacer lo que hace el built-in
+    # input normalmente, ahora coge in valor de la lista inputs
+    monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+    
+    #call the function
+    result = pedir_nivel()
+    
+    #get the output
+    captured = capsys.readouterr()
+    
+    #check the outcomes
+    #final 2 should return level 100
+    assert result == 100
+    #there are 3 incorrect intents
+    assert captured.out.strip().count("nivel") == 3
+    
+    ############
+    ######CASO 3
+    inputs = ['abc', '-1', '3'] 
+    
+    # Mock the user input. En lugar de hacer lo que hace el built-in
+    # input normalmente, ahora coge in valor de la lista inputs
+    monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+    
+    #call the function
+    result = pedir_nivel()
+    
+    #get the output
+    captured = capsys.readouterr()
+    
+    #check the outcomes
+    #final 3 should return level 1000
+    assert result == 1000
+    #there are 2 incorrect intents
+    assert captured.out.strip().count("nivel") == 2
+\end{python}
+
+Seguimos con la implementación de \pythoninline{ask_conjetura} que solicita al jugador que adivine un número dentro de un rango especificado por el nivel de dificultad (de 1 hasta m). Utiliza un bucle para asegurar que la entrada del jugador sea válida. Una posible implementación es:
+
+\begin{python}
+def ask_conjetura(m):
+    while(True):
+        conjetura = input('Adivina un numero de 1 hasta {0}: '.format(m))
+        try:
+            conjetura = int(conjetura)
+            if (conjetura <=0) or (conjetura > m):
+                print(f"El nivel de dificultad solo permite de 1 hasta {m}:")
+            else:
+                return conjetura
+        except:
+            print(f"El nivel de dificultad solo permite de 1 hasta {m}:")
+\end{python}
+
+Una vez implementado nuestra función, lo testeamos automáticamente con pytests, cubriendo los posibles salidas y algunas inputs invalidas. Abajo solo hay un tests con nivel de dificultad 10.
+
+\begin{python}
+def test_ask_conjetura(monkeypatch, capsys):
+    
+    inputs = ['-1', 'a', '9'] 
+    expected_output = "El nivel de dificultad solo permite de 1 hasta 10: \n"\
+                      "El nivel de dificultad solo permite de 1 hasta 10:"
+    
+    # Mock the user input. En lugar de hacer lo que hace el built-in
+    # input normalmente, ahora coge in valor de la lista inputs
+    monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+    
+    #call the function
+    result = ask_conjetura(10)
+    
+    #get the output
+    captured = capsys.readouterr()
+    
+    #check
+    assert result == 9
+    assert captured.out.strip() == expected_output
+\end{python}
+
+La ultima función es \pythoninline{check_conjetura} se encarga de verificar la conjetura del jugador y proporcionar retroalimentación adecuada en función de si la conjetura es demasiado baja, demasiado alta o correcta. Una posible implementación es:
+
+\begin{python}
+def check_conjetura(conjetura, num_a_adivinar, num_de_conjeturas):
+    if(conjetura<num_a_adivinar):
+        print('Tu numero es demasiado bajo')
+        print("Intentalo otra vez!")
+    elif (conjetura>num_a_adivinar):
+        print('Tu numero es demasiado alto')
+        print("Intentalo otra vez!")
+    else:
+        print('¡¡Lo has adivinado!!')
+        print('Con un total de', num_de_conjeturas, 'conjeturas.')
+\end{python}
+
+Una vez implementado nuestra función, lo testeamos automáticamente con pytests, cubriendo los posibles salidas.
+
+\begin{python}
+def test_check_conjetura(capsys):
+    ############
+    ######CASO 1
+    #call the function
+    check_conjetura(50, 100, 5)
+    #get the output
+    captured = capsys.readouterr()
+    #check
+    expected_output1 = 'Tu numero es demasiado bajo\nIntentalo otra vez!'
+    assert captured.out.strip() == expected_output1
+
+    ############
+    ######CASO 2
+    #call the function
+    check_conjetura(75, 50, 8)
+    #get the output
+    captured = capsys.readouterr()
+    #check
+    expected_output2 = 'Tu numero es demasiado alto\nIntentalo otra vez!'
+    assert captured.out.strip() == expected_output2
+    
+    ############
+    ######CASO 3
+    #call the function
+    check_conjetura(10, 10, 20) 
+    #get the output
+    captured = capsys.readouterr()
+    #check
+    expected_output3 = f'¡¡Lo has adivinado!!\nCon un total de {20} conjeturas.'
+    assert captured.out.strip() == expected_output3
+\end{python}
+
+Ya que todo esta hecho, podemos testear el \pythoninline{main()}. Hay 3 cosas importantes:
+
+\begin{enumerate}
+    \item La función \pythoninline{main()} utiliza \pythoninline{input} para pedir al usuario si quiere seguir con el juego. Esta función lo tenemos que parchear para que devuelve el valor que nosotros queremos como tester. En el ejemplo abajo siempre simulamos un \pythoninline{'n'} después del primer juego.
+    \item La generación aleatoria del numero a adivinar lo tenemos que controlar para saber como simular el resto del juego. Lo podemos parcher para que siempre devuelve el mismo valor. En el ejemplo abajo siempre devuelve 8.
+    \item Las funciones \pythoninline{pedir_nivel} y \pythoninline{ask_conjetura} ya lo hemos testeado antes. Así que aquí lo podemos parchear también. En el ejemplo de abajo el nivel siempre será 10, y 
+    se adivina el número en 3 conjeturas.
+\end{enumerate}
+
+\begin{python}
+def test_main(monkeypatch, capsys):  
+    #we always want to generate 8 when calling random.randint
+    monkeypatch.setattr('random.randint', lambda a, b: 8)
+
+    #we always want to return 10 when asking for the nivel
+    monkeypatch.setattr('adivinar.pedir_nivel', lambda:10)
+    
+    #patch the function ask_conjetura with 3 conjeturas
+    inputs = [2,9,8]
+    monkeypatch.setattr('adivinar.ask_conjetura', lambda _ : inputs.pop(0))
+    
+    #mock the user input such that game is ended.
+    monkeypatch.setattr('builtins.input', lambda _ : "n")
+    
+    #call the function
+    main()
+
+    #get the output
+    captured = capsys.readouterr()
+   
+    #check whether the game ended with 3 conjeturas
+    assert captured.out.strip().count("3 conjeturas") == 1
+\end{python}
+
+Esto solo es un ejemplo de 1 test. Hay que añadir mas casos con diferentes niveles de dificultad, y secuencias de conjeturas.
+
+\section{Ahora tu: piedra, papel o tijeras}
+
+\begin{ejercicio}
+    Implementar el juego de piedra, papel, tijeras. Este juego se juega entre dos jugadores. En un turno, cada
+jugador dice simultáneamente al otro una de las siguientes palabras: piedra, papel o tijeras; entonces:
+
+\begin{itemize}
+\item Cuando un jugador dice piedra y el otro tijeras, el jugador que ha dicho piedra es el ganador (la piedra rompe las tijeras).
+\item Cuando un jugador dice tijeras y el otro papel, el jugador que ha dicho tijeras es el ganador (las tijeras cortan el papel).
+\item Cuando un jugador dice papel y el otro piedra, el jugador que ha dicho papel es el ganador (el papel envuelve la piedra).
+\item Cuando ambos jugadores dicen la misma palabra, hay un empate.
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{book/Spanish/05_Funciones/images/sps.png}
+\end{center}
+
+El ordenador es uno de los jugadores, mientras que el usuario es el otro. Cuando se ejecute, el programa debe:
+
+\begin{enumerate}
+\item Pedir al usuario por uno de los elementos; la entrada debe ser una cadena y cuando esa entrada no se
+corresponda a una de las tres posibilidades, el programa tiene que indicar que la palabra no era válida.
+\item Seleccionar al azar uno de los tres elementos (piedra, papel, tijeras) para que sea la opción del ordenador.
+\item Dependiendo de la selección aleatoria y del valor dado por el usuario, el programa escribirá
+el ganador o si ha habido empate, siguiendo las reglas del juego.
+\item Al final pedirá al usuario si quiere jugar otra vez.
+\end{enumerate}
+
+Para simular la selección que hace el ordenador se puede utilizar otra vez la función
+\pythoninline{randint} de la libreria \pythoninline{random}.\\
+
+\begin{Verbatim}[frame=single, label={\em example test execution of the program}]
+>>> main()
+    Welcome to the game of Piedra, Papel, Tijera!
+    You will be playing against the computer.
+    What do you choose (['Piedra', 'Papel', 'Tijera']): hola
+    La palabra no es valida. Try again
+    What do you choose (['Piedra', 'Papel', 'Tijera']): Papel
+    The computer plays: Papel
+    No winner: EMPATE
+
+    want to play more? (s/n)? :s
+    
+    What do you choose (['Piedra', 'Papel', 'Tijera']): Tijera
+    The computer plays: Tijera
+    No winner: EMPATE
+
+    want to play more? (s/n)? :s
+    
+    What do you choose (['Piedra', 'Papel', 'Tijera']): 9
+    La palabra no es valida. Try again
+    What do you choose (['Piedra', 'Papel', 'Tijera']): Piedra
+    The computer plays: Tijera
+    The winner is: USER
+
+    want to play more? (s/n)? :n
+    
+    Exiting game.... bye.
+>>>
+\end{Verbatim}
+
+
+Asegura que ti programa es modular. La modularidad en un programa de Python implica dividir el código en funciones que solamente hacen una tarea y nada más. Estas funciones son más fáciles de testear y entonces aumentan la calidad del código. 
+
+Además, dividir tu código en funciones pequeñas y autónomas mejora la organización, claridad y mantenibilidad del programa. Esta práctica es esencial para escribir programas más eficientes, legibles y escalables.
+
+\end{ejercicio}
+

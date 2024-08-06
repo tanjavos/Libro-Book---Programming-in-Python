@@ -1,0 +1,162 @@
+\hypertarget{ejercicios}{%
+\section*{Ejercicios de respuesta abierta}\label{ejercicios}}
+\addcontentsline{toc}{section}{Ejercicios de respuesta abierta}
+
+
+
+\begin{ejercicio}Dada la siguiente expresión en Python 
+
+\pythoninline{7 + 5 * 4 / 3 + 5}
+
+¿Cuál es su resultado?
+
+Cámbialo utilizando paréntesis para que su resultado sea 6
+\end{ejercicio}
+
+\respuesta{
+18,66\\
+((7 + 5) * 4) /(3+5)
+}
+
+
+
+\begin{ejercicio}Escribe una instrucción Python que asigne a una variable la media aritmética de las variables a, b y c (variables de tipo entero). 
+\end{ejercicio}
+\respuesta{
+\pythoninline{media = (a + b + c) / 3}
+}
+
+\begin{ejercicio}Escribe las instrucciones Python que permiten calcular sobre 2 variables \pythoninline{días} y \pythoninline{horas} el número de días y horas a los que equivale una cierta cantidad de horas (totalHoras). Por ejemplo, 
+
+- si totalHoras vale 60, entonces días valdrá 2 y horas 12; 
+
+- si totalHoras vale 25, entonces dias valdrá 1 y horas 1 también.
+\end{ejercicio}
+%\begin{pythonrespuesta}
+%dias = totalHoras // 24
+%horas = totalHoras   24
+%\end{pythonrespuesta}
+
+
+\begin{ejercicio}Asume que tenemos las siguientes instrucciones de asignación:
+\begin{python}
+    ancho = 17
+    alto = 12.0
+\end{python}
+
+Para cada una de las expresiones siguientes, escribe el valor de la
+expresión y el tipo (del valor de la expresión).
+
+(a)  \pythoninline{ancho/2}
+
+(b)   \pythoninline{ancho/2.0}
+
+(c)   \pythoninline{alto/3}
+
+(d)   \pythoninline{alto * 5}
+
+(e)   \pythoninline{ancho * 4}
+\end{ejercicio}
+\respuesta{
+a.  \pythoninline{8.5 - float}
+
+b.  \pythoninline{8.5 - float}
+
+c.  \pythoninline{4.0 - float}
+
+d.  \pythoninline{60.0 - float}
+
+e.  \pythoninline{68 - int}
+}
+
+
+\begin{ejercicio}Escribe un programa en Python que usa input para pedirle al usuario su nombre y luego darle la bienvenida. Algo como:\\
+
+
+\begin{Verbatim}[frame=single, label={\em ejemplos y posibles test de ejecución}]
+>>> %Run
+  Introduzca su nombre: Tanja
+  Hola Tanja!
+\end{Verbatim}
+\end{ejercicio}
+
+
+\begin{ejercicio}Escribe un programa en Python que lea del teclado una cantidad en millas como números entero y muestre por pantalla su equivalente en kilómetros. Téngase en cuenta que 1 milla son 1,609344 kilómetros.\\
+
+\begin{Verbatim}[frame=single, label={\em ejemplos y posibles test de ejecución}]
+>>> %Run
+  ¿Cuantas millas? 200
+  en km es 321.8688
+\end{Verbatim}
+\end{ejercicio}
+
+
+
+\begin{ejercicio}Dadas dos variables \verb+a+ y \verb+b+,  
+realizar un programa en Python que permita al usuario introducir
+dos valores en las mismas, intercambie sus valores y los muestre por 
+pantalla. La ejecución del programa debe dar lugar a lo siguiente:\\
+\begin{Verbatim}[frame=single, label={\em ejemplo de ejecución}]
+>>> %Run 
+  Introduce el valor de la variable a: 4
+  Introduce el valor de la variable b: 2
+  El valor de a es 2
+  El valor de b es 4
+\end{Verbatim}
+suponiendo que 4 y 2 son los valores introducidos por el usuario.
+Esto debe funcionar para cualquier par de valores introducidos por el usuario.
+
+Ejecute pruebas a través de la consola y verifique la salida. ¿Tu programa funciona con números negativos? ¿Funciona con letras? ¿Funciona con números reales? ¿Las variables \verb+a+ y \verb+b+ pueden tener tipos diferentes? ¿Debería su programa funcionar para todos estos casos?
+\end{ejercicio}
+
+
+
+\begin{ejercicio}Escribe un programa en Python que lea del teclado la cantidad de perros que están en un parque. Utiliza 3 variables para calcular la cantidad de cabezas, patas, y orejas hay en el parque. Imprime el resultado en la pantalla.\\
+
+\begin{Verbatim}[frame=single, label={\em ejemplos y posibles test de ejecución}]
+>>> %Run
+  ¿Cuantas perros hay? 15
+  Hay 15 cabezas, 60 patas, y 30 orejas.
+>>> %Run
+  ¿Cuantas perros hay? 1
+  Hay 1 cabezas, 4 patas, y 2 orejas.
+\end{Verbatim}
+\end{ejercicio}
+
+
+\begin{ejercicio}Escribe un programa en Python que pide al usuario la cantidad de horas trabajado y la tarifa por hora. Devuelve el salario bruto.\\
+
+\begin{Verbatim}[frame=single, label={\em ejemplos y posibles test de ejecución}]
+>>> %Run
+  ¿Cuantas horas? 10
+  ¿Cual es la tarifa bruto por hora?65
+  Salario bruto es: 650.0
+>>> %Run
+  ¿Cuantas horas? 13.5
+  ¿Cual es la tarifa bruto por hora? 10
+  Salario bruto es: 135.0
+\end{Verbatim}
+\end{ejercicio}
+
+
+\begin{ejercicio}Implementa un programa que calcule la temperatura en grados centígrados a partir de la temperatura en grados Fahrenheit. La fórmula es la siguiente: 
+\begin{displaymath}
+  C = \frac{5}{9}(F-32)
+\end{displaymath} 
+La entrada del programa son los grados Fahrenheit introducidos por el usuario. Este valor lo guardaremos en una variable, por ejemplo \verb+F+. Después, nuestro programa calcula la expresión dada por la fórmula y almacena el resultado en otra variable, por ejemplo \verb+C+. El ultimo paso consistirá en imprimir el resultado para el usuario.\\
+
+\begin{Verbatim}[frame=single, label={\em ejemplo de ejecución}]
+>>> %Run 
+  Introduce los grados Fahrenheit: 84
+  84.0 grados Fahrenheit son 28.9 grados Celsius
+\end{Verbatim}
+
+Haz más tests de tu programa para verificar sus respuestas utilizando este convertidor online:
+
+\url{https://www.metric-conversions.org/es/temperatura/fahrenheit-a-celsius.htm}
+
+%TODO
+%https://www.geeksforgeeks.org/program-distance-two-points-earth/
+
+\end{ejercicio}
+
